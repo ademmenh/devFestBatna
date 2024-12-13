@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+      "target": "es2021",
+      "module": "commonjs",
+      "rootDir": "./src",
+      "outDir": "./dist",
+      "strict": true,
+      "skipLibCheck": true,
+      "noImplicitOverride": true,
+      "noImplicitReturns": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "removeComments": true,
+      "resolveJsonModule": true,
+      "baseUrl": "./",
+      "paths": {
+        "@/*": ["src/*"],
+        "@db/*": ["db/*"],
+        "@config/*": ["config/*"],
+        "@logs/*": ["logs/*"],
+        "@middlewares": ["middlewares/*"],
+        "@types/*": ["types/*"],
+        "@utils/*": ["utils/*"],
+    
+        
+      }
+    }
+  }
