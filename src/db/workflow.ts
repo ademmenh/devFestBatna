@@ -1,8 +1,6 @@
 
 import { Model, Schema, model, Types } from 'mongoose'
 
-import bcrypt from 'bcrypt'
-
 import { WorkflowI } from '@/types/workflow' 
 
 interface WorkflowD extends WorkflowI, Document {
@@ -33,7 +31,7 @@ const WorkflowS = new Schema <WorkflowI> ({
         }
     },
     userId: {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
 
