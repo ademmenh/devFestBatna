@@ -29,10 +29,7 @@ export const productLogs = {
     PRODUCT_NOT_FOUND: {
         message: 'PRODUCT not found.',
     },
-    PRODUCT_UPDATE_SUCCESS: {
-        message: 'PRODUCT is updated.',
-    },
-    PRODUCT_UPDATE_FAILURE: {
+    UPDATE_PRODUCT_FAILURE: {
         message: 'PRODUCT is not updated.',
     },
     PRODUCT_ERROR_GENERIC: {

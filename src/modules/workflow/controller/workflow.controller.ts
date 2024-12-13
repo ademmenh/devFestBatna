@@ -1,53 +1,53 @@
-import { ProcutServices } from "../services/product.service"
+import { WorkflowServices } from "../services/workflow.service"
 import { successService, errorService } from '@/utils/service'
 import { successResponse, errorResponse } from "@/utils/response"
 
 import { Request, Response } from "express"
 
 
-export const getProducts = async (req: Request, res: Response) => {
+export const getWorkflows = async (req: Request, res: Response) => {
     const page = parseInt(req.params.page) || 1
     const limit = parseInt(req.params.limit) || 12
 
-    const result = await ProcutServices.getProducts(page, limit)
+    const result = await WorkflowServices.getWorkflows(page, limit)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
     if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
 }
 
-export const getProduct = async (req: Request, res: Response) => {
-    const userId = req.params.id
+export const getWorkflow = async (req: Request, res: Response) => {
+    const workflowrId = req.params.id
 
-    const result = await ProcutServices.getProduct(userId)
-
-    if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
-    if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
-}
-
-
-export const createProduct = async (req: Request, res: Response) => {
-    const productData = req.body
-
-    const result = await ProcutServices.createProduct(productData)
+    const result = await WorkflowServices.getWorkflow(workflowrId)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
     if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
 }
 
-export const updateProducts = async (req: Request, res: Response) => {
-    const {id} = req.params
-    const userData = req.body
 
-    const result = await ProcutServices.updateProduct(id, userData)
+export const createWorkflow = async (req: Request, res: Response) => {
+    const workflowData = req.body
+
+    const result = await WorkflowServices.createProduct(workflowData)
+
+    if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
+    if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
+}
+
+export const updateWorkflow = async (req: Request, res: Response) => {
+    const workflowId = req.params.id
+    const workflowData = req.body
+
+    const result = await WorkflowServices.updateProduct(workflowId, workflowData)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
     if (result instanceof errorService) return errorResponse(res, result.code, result.errors, result.error)
 }
 
-export const deleteProduct = async (req: Request, res: Response) => {
-    const { id } = req.params;
+export const deleteWorkflow = async (req: Request, res: Response) => {
+    const workflowId = req.params.id
 
-    const result = await ProcutServices.deleteProduct(id);
+    const result = await WorkflowServices.deleteProduct(workflowId);
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data);
     if (result instanceof errorService) return errorResponse(res, result.code, result.errors, result.error);

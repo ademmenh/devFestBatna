@@ -1,7 +1,7 @@
 
-import { JwtPayload } from '@/types/jwt'
 import { JWT_SECRET_KEY } from '@/config/vars'
 import { jwtConfig } from '@/config/jwt'
+import { JwtPayload } from '@/types/jwt'
 
 import jwt from 'jsonwebtoken'
 

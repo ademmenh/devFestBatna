@@ -5,6 +5,7 @@ import { User } from "@/db/user"
 import { errorService, successService } from "@/utils/service"
 import { authLogs } from "./auth.logs"
 import { Sign } from '@/utils/jwt'
+import { JwtPayload } from "@/types/jwt"
 
 
 export class authService {
@@ -28,7 +29,7 @@ export class authService {
                 )
             }
     
-            const token = Sign({id: user._id, email})
+            const token = Sign({id: user._id, email, role: user.role})
             
             return new successService (
                 httpLogs.Accepted.code,
@@ -62,7 +63,7 @@ export class authService {
                 )
             }
     
-            const token = Sign({id: user._id, email})
+            const token = Sign({id: user._id, email, role: user.role})
             
             return new successService (
                 httpLogs.Accepted.code,

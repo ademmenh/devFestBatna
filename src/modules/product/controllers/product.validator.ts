@@ -2,7 +2,7 @@
 import { validator } from '@/middlewares/validator'
 import { param, body } from 'express-validator'
 
-export const getUserValidator = [
+export const getProductValidator = [
     param('id').isMongoId().withMessage('Invalid mongoId'),
 
     validator,

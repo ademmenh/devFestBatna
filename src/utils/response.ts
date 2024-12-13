@@ -16,7 +16,7 @@ export const successResponse = (res: Response, code: number, message: string, da
 }
 
 
-export const errorResponse = (res: Response, code: number, errors: string[], error: unknown) => {
+export const errorResponse = (res: Response, code: number, errors: string[], error?: unknown) => {
     let body: errorResponseI
     if ( error instanceof mongoose.mongo.MongoServerError && error.code === 11000 ) {
         body = {

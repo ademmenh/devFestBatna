@@ -1,62 +1,62 @@
 
-import { Product } from '@/db/product'
+import { Workflow } from '@/db/workflow'
 import { errorService, successService } from '@/utils/service'
 import { httpLogs } from '@/logs/http'
-import { productLogs } from './product.log'
+import { WorkflowLogs } from './workflow.log'
 import { ProductI } from '@/types/product'
 
 
-export class ProcutServices {
-    static getProduct = async (userId: string) => {
+export class WorkflowServices {
+    static getWorkflow = async (workflowId: string) => {
         try {
             
-            const product = await Product.findById(userId)
-            if (!product) {
+            const workflow = await Workflow.findById(workflowId)
+            if (!workflow) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
 
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.GET_PRODUCT_SUCCESS.message,
-                product,
+                WorkflowLogs.GET_WORKFLOW_SUCCESS.message,
+                workflow,
 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
         }
     }
     
-    static getProducts = async (page: number, limit: number) => {
+    static getWorkflows = async (page: number, limit: number) => {
         try {
             
-            const products = await Product.find().skip((page-1)*limit).limit(limit)
-            if (products.length===0) {
+            const workflows = await Workflow.find().skip((page-1)*limit).limit(limit)
+            if (workflows.length===0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
 
                 )
             }
-            const totalItems = await Product.countDocuments()
+            const totalDocuments = await Workflow.countDocuments()
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.GET_PRODUCT_SUCCESS.message,
+                WorkflowLogs.GET_WORKFLOW_SUCCESS.message,
                 {
-                    products,
+                    workflows,
                     pagination: {
                         currentPage: page,
-                        totalPages: Math.ceil(totalItems / limit),
-                        totalItems,
+                        totalPages: Math.ceil(totalDocuments / limit),
+                        totalDocuments,
                         limit,
                     },
                 },
@@ -64,7 +64,7 @@ export class ProcutServices {
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [WorkflowLogs.GET_WORKFLOW_FAILURE.message],
                 (err as Error).message,
 
             )
@@ -73,25 +73,25 @@ export class ProcutServices {
 
     static createProduct = async (productData: ProductI) => {
         try {
-            const product = await Product.create(productData)
+            const product = await Workflow.create(productData)
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
 
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.CREATE_PRODUCT_SUCCESS.message,
+                WorkflowLogs.CREATE_WORKFLOW_SUCCESS.message,
                 product,
                 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
@@ -101,25 +101,25 @@ export class ProcutServices {
 
     static updateProduct = async (productId: string, productData: Partial<ProductI>) => {
         try {
-            const product = await Product.findByIdAndUpdate(productId, productData, {returnDocument: 'after'})
-            if (!product) {
+            const workflow = await Workflow.findByIdAndUpdate(productId, productData, {returnDocument: 'after'})
+            if (!workflow) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
 
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.UPDATE_PRODUCT_SUCCESS.message,
-                product,
+                WorkflowLogs.UPDATE_WORKFLOW_SUCCESS.message,
+                workflow,
                 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
@@ -128,26 +128,26 @@ export class ProcutServices {
     
     static deleteProduct = async (productId: string) => {
         try {
-            const product = await Product.findByIdAndDelete(productId);
+            const product = await Workflow.findByIdAndDelete(productId);
 
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
 
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.UPDATE_PRODUCT_SUCCESS.message,
+                WorkflowLogs.UPDATE_WORKFLOW_SUCCESS.message,
                 product
                 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )

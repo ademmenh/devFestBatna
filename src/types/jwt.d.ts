@@ -1,16 +1,9 @@
 
 import { Types } from 'mongoose'
 
-declare interface JwtUserPayload {
+interface JwtPayload {
     id: Types.ObjectId,
     email: string,
+    role: string,
 
 }
-
-declare interface JwtAdminPayload {
-    id: Types.ObjectId,
-    isAdmin: boolean,
-
-}
-
-type JwtPayload = JwtAdminPayload | JwtUserPayload
