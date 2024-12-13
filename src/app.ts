@@ -1,4 +1,6 @@
 
+import 'module-alias/register'
+
 import { setRoutes } from './routes'
 import { initServer } from './config/init'
 import { errorMiddleWare } from './middlewares/error'

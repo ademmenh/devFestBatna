@@ -1,18 +1,18 @@
 
-import { Workflow } from '@/db/workflow'
-import { errorService, successService } from '@/utils/service'
-import { httpLogs } from '@/logs/http'
+import { Workflow } from '@db/workflow'
+import { errorService, successService } from '@utils/service'
+import { httpLogs } from '@logs/http'
 import { WorkflowLogs } from './workflow.log'
-import { WorkflowI } from '@/types/workflow'
+import { WorkflowI } from '@Types/workflow'
 
 
 export class WorkflowServices {
-    static getWorkflow = async (userId: string, productId: string) => {
+    static getWorkflow = async (userId: string, workflowId: string) => {
         try {
             
             const workflow = await Workflow.find({
                 userId,
-                productId
+                workflowId
             })
             if (!workflow) {
                 return new errorService(
@@ -45,7 +45,7 @@ export class WorkflowServices {
                 .skip((page-1)*limit)
                 .limit(limit)
 
-            if (products.length===0) {
+            if (products.length === 0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
@@ -109,7 +109,7 @@ export class WorkflowServices {
     static updateWorkflow = async (userId: string, workflowId: string, workflowData: Partial<WorkflowI>) => {
         try {
 
-            let workflow = await Workflow.findOne({workflowId, userId})
+            let workflow = await Workflow.findOneAndUpdate({_id: workflowId, userId}, workflowData, {returnDocument: 'after'})
 
             if (!workflow) {
                 return new errorService(
@@ -118,15 +118,6 @@ export class WorkflowServices {
 
                 )
             }
-
-            workflow = await Workflow.findByIdAndUpdate(workflowId, workflowData, {returnDocument: 'after'})
-
-            return new successService(
-                httpLogs.OK.code,
-                WorkflowLogs.UPDATE_WORKFLOW_SUCCESS.message,
-                workflow,
-                
-            )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
@@ -140,7 +131,7 @@ export class WorkflowServices {
     static deleteWorkflow = async (userId: string, productId: string) => {
         try {
 
-            let workflow = await Workflow.findOne({userId, productId})
+            let workflow = await Workflow.findOneAndDelete({_id: userId, productId})
             
             if (!workflow) {
                 return new errorService(
@@ -150,16 +141,6 @@ export class WorkflowServices {
                 )
             }
             
-            workflow = await Workflow.findByIdAndDelete(productId)
-
-            if (!workflow) {
-                return new errorService(
-                    httpLogs.BadRequest.code,
-                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
-
-                )
-            }
-
             return new successService(
                 httpLogs.OK.code,
                 WorkflowLogs.UPDATE_WORKFLOW_SUCCESS.message,

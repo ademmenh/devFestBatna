@@ -1,7 +1,7 @@
 
-import { Model, Schema, model, Types } from 'mongoose'
+import { Model, Schema, model, Document } from 'mongoose'
 
-import { WorkflowI } from '@/types/workflow' 
+import { WorkflowI } from '@Types/workflow' 
 
 interface WorkflowD extends WorkflowI, Document {
     createdAt: Date,
@@ -46,4 +46,4 @@ const WorkflowS = new Schema <WorkflowI> ({
 })
 
 
-export const Workflow = model<WorkflowI, Model<WorkflowD>>('User', WorkflowS)
+export const Workflow = model<WorkflowI, Model<WorkflowD>>('Workflow', WorkflowS)

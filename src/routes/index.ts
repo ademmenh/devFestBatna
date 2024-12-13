@@ -1,8 +1,8 @@
 
-import { Auth } from '@/modules/auth'
-import { Product } from '@/modules/product'
-import { User } from '@/modules/user'
-import { Workflow } from '@/modules/workflow'
+import { Auth } from '@modules/auth'
+import { Product } from '@modules/product'
+import { User } from '@modules/user'
+import { Workflow } from '@modules/workflow'
 
 import { Application } from 'express'
 

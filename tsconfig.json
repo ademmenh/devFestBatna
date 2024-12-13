@@ -1,28 +1,35 @@
 {
-    "compilerOptions": {
-      "target": "es2021",
+  "compilerOptions": {
+      "target": "ES2021",
+      "lib": ["es2021", "dom"],
       "module": "commonjs",
-      "rootDir": "./src",
+      "rootDir": "src",
+      "baseUrl": "src",
+      "paths": {
+          "@/*": ["src/*"],
+          "@config/*": ["config/*"],
+          "@db/*": ["db/*"],
+          "@logs/*": ["logs/*"],
+          "@middlewares/*": ["middlewares/*"],
+          "@modules/*": ["modules/*"],
+          "@services/*": ["services/*"],
+          "@Types/*": ["types/*"],
+          "@utils/*": ["utils/*"],
+          "@routes/*": ["routes/*"],
+      },
+
       "outDir": "./dist",
-      "strict": true,
-      "skipLibCheck": true,
-      "noImplicitOverride": true,
-      "noImplicitReturns": true,
       "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true,
-      "removeComments": true,
-      "resolveJsonModule": true,
-      "baseUrl": "./",
-      "paths": {
-        "@/*": ["src/*"],
-        "@db/*": ["db/*"],
-        "@config/*": ["config/*"],
-        "@logs/*": ["logs/*"],
-        "@middlewares": ["middlewares/*"],
-        "@types/*": ["types/*"],
-        "@utils/*": ["utils/*"],
-    
-        
-      }
-    }
-  }
+      "strict": true,
+      "skipLibCheck": false,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "resolveJsonModule": true
+  },
+  "typedocOptions": {
+      "entryPoints": ["src/index.ts"],
+      "out": "docs"
+  },
+  "include": ["src", "src/test"]
+}

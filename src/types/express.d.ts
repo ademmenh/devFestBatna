@@ -1,5 +1,5 @@
 
-import { UserD } from '@/db/user'
+import { UserD } from '@db/user'
 
 declare global {
     namespace Express {

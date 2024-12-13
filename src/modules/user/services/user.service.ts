@@ -1,7 +1,7 @@
 
-import { User } from '@/db/user'
-import { errorService, successService } from '@/utils/service'
-import { httpLogs } from '@/logs/http'
+import { User } from '@db/user'
+import { errorService, successService } from '@utils/service'
+import { httpLogs } from '@logs/http'
 import { userLogs } from './user.logs'
 
 

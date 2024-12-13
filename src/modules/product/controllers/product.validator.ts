@@ -1,5 +1,5 @@
 
-import { validator } from '@/middlewares/validator'
+import { validator } from '@middlewares/validator'
 import { param, body } from 'express-validator'
 
 export const getProductValidator = [

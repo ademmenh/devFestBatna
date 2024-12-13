@@ -1,28 +1,20 @@
 
-import { Product } from '@/db/product'
-import { errorService, successService } from '@/utils/service'
-import { httpLogs } from '@/logs/http'
+import { ProductI } from '@Types/product'
+import { Product } from '@db/product'
+import { errorService, successService } from '@utils/service'
+import { httpLogs } from '@logs/http'
 import { productLogs } from './product.log'
-import { ProductI } from '@/types/product'
 
 
 export class ProcutServices {
     static getProduct = async (userId: string, productId: string) => {
         try {
             
-            const product = await Product.findById(productId)
+            const product = await Product.findOne({_id: productId, userId})
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [productLogs.PRODUCT_NOT_FOUND.message],
-
-                )
-            }
-
-            if (product.userId !== userId) {
-                return new errorService(
-                    httpLogs.Unauthorized.code,
-                    [productLogs.GET_PRODUCT_FAILURE.message],
 
                 )
             }
@@ -114,16 +106,8 @@ export class ProcutServices {
     static updateProduct = async (userId: string, productId: string, productData: Partial<ProductI>) => {
         try {
 
-            let product = await Product.findOne({productId})
-            if (product?.userId !== userId) {
-                return new errorService(
-                    httpLogs.Unauthorized.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+            let product = await Product.deleteOne({_id: userId, productId})
 
-                )
-            }
-
-            product = await Product.findByIdAndUpdate(productId, productData, {returnDocument: 'after'})
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -148,21 +132,11 @@ export class ProcutServices {
         }
     }
     
-    static deleteProduct = async (userId: string,productId: string) => {
+    static deleteProduct = async (userId: string, productId: string) => {
         try {
 
-            let product = await Product.findById(productId)
+            let product = await Product.deleteOne({_id: userId, productId})
             
-            if (product?.userId !== userId) {
-                return new errorService(
-                    httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
-
-                )
-            }
-            
-            product = await Product.findByIdAndDelete(productId)
-
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -170,7 +144,7 @@ export class ProcutServices {
 
                 )
             }
-
+            
             return new successService(
                 httpLogs.OK.code,
                 productLogs.UPDATE_PRODUCT_SUCCESS.message,

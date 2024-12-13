@@ -2,11 +2,8 @@
 import { User } from './../db/user'
 import { Request, Response, NextFunction } from 'express'
 import { Verify } from '../utils/jwt'
-import { errorResponse, successResponse } from '@/utils/response'
-import { httpLogs } from '@/logs/http'
-import { exit } from 'process'
-import { exitLogs } from '@/logs/exit'
-import { JwtPayload } from '@/types/jwt'
+import { errorResponse } from '@utils/response'
+import { httpLogs } from '@logs/http'
 
 
 
@@ -65,7 +62,7 @@ export const isUser = async (req: Request, res: Response, next: NextFunction) =>
             )
 
         }
-        (req as any).user = user
+        req.user = user
         next()
 
     } catch (err) {
@@ -83,22 +80,33 @@ export const isUser = async (req: Request, res: Response, next: NextFunction) =>
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
     
     try {
-
         const authHeader = req.headers.authorization
         if (!authHeader) {
-            res.status(403).json({status: "Unprocessable Content"})
-            return
+            return errorResponse(
+                res,
+                httpLogs.Unauthorized.code,
+                [httpLogs.Unauthorized.message],
+
+            )
         }
 
         const [bearer, token] = authHeader.split(' ')
         if (!bearer || !token) {
-            res.status(403).json({status: "Unauthorized"})
-            return
+            return errorResponse(
+                res,
+                httpLogs.Unauthorized.code,
+                [httpLogs.Unauthorized.message],
+
+            )
         }
 
         if (bearer !== 'Bearer') {
-            res.status(403).json({status: "Unauthorized"})
-            return
+            return errorResponse(
+                res,
+                httpLogs.Unauthorized.code,
+                [httpLogs.Unauthorized.message],
+
+            )
         }
 
         const {id, email, role} = await Verify(token) as JwtPayload
@@ -122,8 +130,7 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
 
             )
         }
-        (req as any).user = user
-
+        req.user = user
         next()
 
     } catch (err) {

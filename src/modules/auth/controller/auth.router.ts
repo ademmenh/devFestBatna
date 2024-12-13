@@ -1,7 +1,8 @@
 
-import {Router} from 'express'
 import { SignUp, SignIn } from './auth.controller'
 import { SignInValidator, SignUpValidator } from './auth.validator'
+
+import { Router } from 'express'
 
 export const Auth = Router()
 

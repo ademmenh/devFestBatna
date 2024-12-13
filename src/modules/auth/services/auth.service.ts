@@ -1,11 +1,10 @@
 
-import { httpLogs } from "@/logs/http"
+import { httpLogs } from "@logs/http"
 
-import { User } from "@/db/user"
-import { errorService, successService } from "@/utils/service"
+import { User } from "@db/user"
+import { errorService, successService } from "@utils/service"
 import { authLogs } from "./auth.logs"
-import { Sign } from '@/utils/jwt'
-import { JwtPayload } from "@/types/jwt"
+import { Sign } from '@utils/jwt'
 
 
 export class authService {
@@ -29,7 +28,7 @@ export class authService {
                 )
             }
     
-            const token = Sign({id: user._id, email, role: user.role})
+            const token = Sign({id: (user._id as string), email, role: user.role})
             
             return new successService (
                 httpLogs.Accepted.code,
@@ -63,7 +62,7 @@ export class authService {
                 )
             }
     
-            const token = Sign({id: user._id, email, role: user.role})
+            const token = Sign({id: (user._id as string), email, role: user.role})
             
             return new successService (
                 httpLogs.Accepted.code,

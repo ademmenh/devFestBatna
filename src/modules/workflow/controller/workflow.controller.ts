@@ -1,14 +1,15 @@
 import { WorkflowServices } from "../services/workflow.service"
-import { successService, errorService } from '@/utils/service'
-import { successResponse, errorResponse } from "@/utils/response"
+import { successService, errorService } from '@utils/service'
+import { successResponse, errorResponse } from "@utils/response"
 
 import { Request, Response } from "express"
+import { UserD } from "@db/user"
 
 
 export const getWorkflows = async (req: Request, res: Response) => {
     const page = parseInt(req.params.page) || 1
     const limit = parseInt(req.params.limit) || 12
-    const userId = req.user._id
+    const userId = (req.user as UserD)._id as string
 
     const result = await WorkflowServices.getWorkflows(userId, page, limit)
 
@@ -18,7 +19,7 @@ export const getWorkflows = async (req: Request, res: Response) => {
 
 export const getWorkflow = async (req: Request, res: Response) => {
     const workflowrId = req.params.id
-    const userId = req.user._id
+    const userId = (req.user as UserD)._id as string
 
     const result = await WorkflowServices.getWorkflow(userId, workflowrId)
 
@@ -29,7 +30,7 @@ export const getWorkflow = async (req: Request, res: Response) => {
 
 export const createWorkflow = async (req: Request, res: Response) => {
     const workflowData = req.body
-    const userId = req.user._id
+    const userId = (req.user as UserD)._id as string
 
     const result = await WorkflowServices.createWorkflow(userId, workflowData)
 
@@ -40,7 +41,7 @@ export const createWorkflow = async (req: Request, res: Response) => {
 export const updateWorkflow = async (req: Request, res: Response) => {
     const workflowId = req.params.id
     const workflowData = req.body
-    const userId = req.user._id
+    const userId = (req.user as UserD)._id as string
 
 
     const result = await WorkflowServices.updateWorkflow(userId, workflowId, workflowData)
@@ -51,7 +52,7 @@ export const updateWorkflow = async (req: Request, res: Response) => {
 
 export const deleteWorkflow = async (req: Request, res: Response) => {
     const workflowId = req.params.id
-    const userId = req.user._id
+    const userId = (req.user as UserD)._id as string
 
     const result = await WorkflowServices.deleteWorkflow(userId, workflowId);
 

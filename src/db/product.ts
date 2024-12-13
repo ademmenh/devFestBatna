@@ -1,8 +1,7 @@
 
-import { ProductI } from '@/types/product'
+import { ProductI } from '@Types/product'
 
-import { Model, Schema, model, Types } from 'mongoose'
-import bcrypt from 'bcrypt'
+import { Model, Schema, model, Types, Document } from 'mongoose'
 
 interface ProductD extends ProductI, Document {
     createdAt: Date,

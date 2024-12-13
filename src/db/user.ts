@@ -1,11 +1,11 @@
 
-import { Model, Schema, model } from 'mongoose'
+import { Model, Schema, model, Document } from 'mongoose'
 
 
 import bcrypt from 'bcrypt'
 
 
-interface UserD extends UserI, Document {
+export interface UserD extends UserI, Document {
     createdAt: Date,
     updatedAt: Date,
     passwordMatches(password: string): Promise<Boolean>

@@ -2,7 +2,7 @@
 import {Router} from 'express'
 import { getWorkflow, getWorkflows, createWorkflow, updateWorkflow, deleteWorkflow } from './workflow.controller'
 import { createWorkflowValidator, updateWorkflowValidator, getWorkflowValidator, deleteWorkflowValidator } from './workflow.validator'
-import { isUser } from '@/middlewares/auth'
+import { isUser } from '@middlewares/auth'
 
 export const Workflow = Router()
 

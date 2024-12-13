@@ -1,6 +1,6 @@
 import { UserServices } from "../services/user.service"
-import { successService, errorService } from '@/utils/service'
-import { successResponse, errorResponse } from "@/utils/response"
+import { successService, errorService } from '@utils/service'
+import { successResponse, errorResponse } from "@utils/response"
 
 import { Request, Response } from "express"
 
