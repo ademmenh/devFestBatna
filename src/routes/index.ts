@@ -7,7 +7,7 @@ import { Workflow } from '@/modules/workflow'
 import { Application } from 'express'
 
 
-export const SetRoutes = (app: Application) => {
+export const setRoutes = (app: Application) => {
     app.use('/auth', Auth),
     app.use('users', User),
     app.use('/products', Product),

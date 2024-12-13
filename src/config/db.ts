@@ -8,7 +8,7 @@ import mongoose from 'mongoose'
 
 
 
-export const dbConfig = async (): Promise<Boolean> => {
+export const configDB = async (): Promise<Boolean> => {
 
     try {
         console.log('Connecting to DataBase...')

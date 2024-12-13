@@ -1,7 +1,7 @@
 
 import { PORT } from './vars'
 
-import { dbConfig } from './db'
+import { configDB } from './db'
 
 import { Application } from 'express'
 
@@ -9,7 +9,7 @@ import { Application } from 'express'
 
 export const initServer = async (app: Application) => {
     
-    const connected = await dbConfig()
+    const connected = await configDB()
     if (!connected) {
         process.exit(1)
     }
