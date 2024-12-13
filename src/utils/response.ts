@@ -1,8 +1,8 @@
 
 
 import { httpLogs } from '@/logs/http'
-import { Response } from 'express'
 import mongoose from 'mongoose'
+import { Response } from 'express'
 
 
 export const successResponse = (res: Response, code: number, message: string, data: unknown): void => {
