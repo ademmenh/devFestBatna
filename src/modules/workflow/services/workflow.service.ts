@@ -3,14 +3,17 @@ import { Workflow } from '@/db/workflow'
 import { errorService, successService } from '@/utils/service'
 import { httpLogs } from '@/logs/http'
 import { WorkflowLogs } from './workflow.log'
-import { ProductI } from '@/types/product'
+import { WorkflowI } from '@/types/workflow'
 
 
 export class WorkflowServices {
-    static getWorkflow = async (workflowId: string) => {
+    static getWorkflow = async (userId: string, productId: string) => {
         try {
             
-            const workflow = await Workflow.findById(workflowId)
+            const workflow = await Workflow.find({
+                userId,
+                productId
+            })
             if (!workflow) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -35,28 +38,31 @@ export class WorkflowServices {
         }
     }
     
-    static getWorkflows = async (page: number, limit: number) => {
+    static getWorkflows = async (userId: string, page: number, limit: number) => {
         try {
             
-            const workflows = await Workflow.find().skip((page-1)*limit).limit(limit)
-            if (workflows.length===0) {
+            const products = await Workflow.find({userId})
+                .skip((page-1)*limit)
+                .limit(limit)
+
+            if (products.length===0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
 
                 )
             }
-            const totalDocuments = await Workflow.countDocuments()
+            const totalItems = await Workflow.countDocuments()
 
             return new successService(
                 httpLogs.OK.code,
                 WorkflowLogs.GET_WORKFLOW_SUCCESS.message,
                 {
-                    workflows,
+                    products,
                     pagination: {
                         currentPage: page,
-                        totalPages: Math.ceil(totalDocuments / limit),
-                        totalDocuments,
+                        totalPages: Math.ceil(totalItems / limit),
+                        totalItems,
                         limit,
                     },
                 },
@@ -64,16 +70,17 @@ export class WorkflowServices {
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [WorkflowLogs.GET_WORKFLOW_FAILURE.message],
+                [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
         }
     }
 
-    static createProduct = async (productData: ProductI) => {
+    static createWorkflow = async (userId: string, productData: WorkflowI) => {
         try {
-            const product = await Workflow.create(productData)
+
+            const product = await Workflow.create({...productData, userId})
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -99,9 +106,11 @@ export class WorkflowServices {
     }
     
 
-    static updateProduct = async (productId: string, productData: Partial<ProductI>) => {
+    static updateWorkflow = async (userId: string, workflowId: string, workflowData: Partial<WorkflowI>) => {
         try {
-            const workflow = await Workflow.findByIdAndUpdate(productId, productData, {returnDocument: 'after'})
+
+            let workflow = await Workflow.findOne({workflowId, userId})
+
             if (!workflow) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -109,6 +118,8 @@ export class WorkflowServices {
 
                 )
             }
+
+            workflow = await Workflow.findByIdAndUpdate(workflowId, workflowData, {returnDocument: 'after'})
 
             return new successService(
                 httpLogs.OK.code,
@@ -126,11 +137,22 @@ export class WorkflowServices {
         }
     }
     
-    static deleteProduct = async (productId: string) => {
+    static deleteWorkflow = async (userId: string, productId: string) => {
         try {
-            const product = await Workflow.findByIdAndDelete(productId);
 
-            if (!product) {
+            let workflow = await Workflow.findOne({userId, productId})
+            
+            if (!workflow) {
+                return new errorService(
+                    httpLogs.BadRequest.code,
+                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
+
+                )
+            }
+            
+            workflow = await Workflow.findByIdAndDelete(productId)
+
+            if (!workflow) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
@@ -141,7 +163,7 @@ export class WorkflowServices {
             return new successService(
                 httpLogs.OK.code,
                 WorkflowLogs.UPDATE_WORKFLOW_SUCCESS.message,
-                product
+                workflow
                 
             )
         } catch (err) {

@@ -1,9 +1,9 @@
 
-import { Model, Schema, model } from 'mongoose'
-
+import { Model, Schema, model, Types } from 'mongoose'
 
 import bcrypt from 'bcrypt'
 
+import { WorkflowI } from '@/types/workflow' 
 
 interface WorkflowD extends WorkflowI, Document {
     createdAt: Date,
@@ -32,10 +32,16 @@ const WorkflowS = new Schema <WorkflowI> ({
           required: true
         }
     },
+    userId: {
+        type: Types.ObjectId,
+        ref: 'User',
+        required: true,
+
+    },
     type: {
         type: String,
         required: true
-    }
+    },
 },
 {
     timestamps: true

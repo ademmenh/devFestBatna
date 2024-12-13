@@ -7,14 +7,22 @@ import { ProductI } from '@/types/product'
 
 
 export class ProcutServices {
-    static getProduct = async (userId: string) => {
+    static getProduct = async (userId: string, productId: string) => {
         try {
             
-            const product = await Product.findById(userId)
+            const product = await Product.findById(productId)
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [productLogs.PRODUCT_NOT_FOUND.message],
+
+                )
+            }
+
+            if (product.userId !== userId) {
+                return new errorService(
+                    httpLogs.Unauthorized.code,
+                    [productLogs.GET_PRODUCT_FAILURE.message],
 
                 )
             }
@@ -35,10 +43,13 @@ export class ProcutServices {
         }
     }
     
-    static getProducts = async (page: number, limit: number) => {
+    static getProducts = async (userId: string, page: number, limit: number) => {
         try {
             
-            const products = await Product.find().skip((page-1)*limit).limit(limit)
+            const products = await Product.find({userId})
+                .skip((page-1)*limit)
+                .limit(limit)
+
             if (products.length===0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -71,9 +82,10 @@ export class ProcutServices {
         }
     }
 
-    static createProduct = async (productData: ProductI) => {
+    static createProduct = async (userId: string, productData: ProductI) => {
         try {
-            const product = await Product.create(productData)
+
+            const product = await Product.create({...productData, userId})
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -99,9 +111,19 @@ export class ProcutServices {
     }
     
 
-    static updateProduct = async (productId: string, productData: Partial<ProductI>) => {
+    static updateProduct = async (userId: string, productId: string, productData: Partial<ProductI>) => {
         try {
-            const product = await Product.findByIdAndUpdate(productId, productData, {returnDocument: 'after'})
+
+            let product = await Product.findOne({productId})
+            if (product?.userId !== userId) {
+                return new errorService(
+                    httpLogs.Unauthorized.code,
+                    [productLogs.PRODUCT_NOT_FOUND.message],
+
+                )
+            }
+
+            product = await Product.findByIdAndUpdate(productId, productData, {returnDocument: 'after'})
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -126,9 +148,20 @@ export class ProcutServices {
         }
     }
     
-    static deleteProduct = async (productId: string) => {
+    static deleteProduct = async (userId: string,productId: string) => {
         try {
-            const product = await Product.findByIdAndDelete(productId);
+
+            let product = await Product.findById(productId)
+            
+            if (product?.userId !== userId) {
+                return new errorService(
+                    httpLogs.BadRequest.code,
+                    [productLogs.PRODUCT_NOT_FOUND.message],
+
+                )
+            }
+            
+            product = await Product.findByIdAndDelete(productId)
 
             if (!product) {
                 return new errorService(

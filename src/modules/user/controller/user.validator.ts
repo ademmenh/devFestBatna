@@ -7,6 +7,19 @@ export const getUserValidator = [
     validator,
 ]
 
+
+export const getAllUserValidator = [
+    param('page')
+    .isInt()
+    .withMessage('Invalid page'),
+    
+    param('limit')
+    .isInt()
+    .withMessage('Invalid page'),
+
+    validator,
+]
+
 const updateUserAllowedFields = [
     'firstname',
     'lastname',

@@ -6,6 +6,42 @@ import { userLogs } from './user.logs'
 
 
 export class UserServices {
+
+    static GetUsers = async (page: number, limit: number) => {
+        try {
+            
+            const users = await User.find()
+                .skip((page-1)*limit)
+                .limit(limit)
+
+            if (users.length === 0) {
+                return new errorService(
+                    httpLogs.BadRequest.code,
+                    [userLogs.USER_NOT_FOUND.message],
+
+                )
+            }
+
+            const responseUsers = users.map((user) => {
+                user.toResponse()
+            })
+
+            return new successService(
+                httpLogs.OK.code,
+                userLogs.GET_USER_SUCCESS.message,
+                responseUsers,
+
+            )
+        } catch (err) {
+            return new errorService(
+                httpLogs.InternalServerError.code,
+                [userLogs.USER_ERROR_GENERIC.message],
+                (err as Error).message,
+
+            )
+        }
+    }
+
     static GetUser = async (userId: string) => {
         try {
             
