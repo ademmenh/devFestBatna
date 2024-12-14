@@ -17,6 +17,12 @@ The project organizes the services into modules inside the src direcotry:
 9. **types**: Contains TypeScript type definitions.
 10. **utils**: Contains general purpose utility functions used across different parts of the application.
 
+## Modules:
+1. **Auth**: Authentication management
+2. ***User*: User management
+3. **Product**: Product management
+4. **Workflow**: Workflow management
+
 Documentation:
 Scripts :
 - `npm run build`: "Transpile TypeScript files into JavaScript using TypeScript compiler.",
