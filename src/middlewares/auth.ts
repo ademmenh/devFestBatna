@@ -10,36 +10,7 @@ import { httpLogs } from '@Types/logs/httpLogs'
 export const isUser = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
-        const authHeader = req.headers.authorization
-        if (!authHeader) {
-            return errorResponse(
-                res,
-                httpLogs.Unauthorized.code,
-                [httpLogs.Unauthorized.message],
-
-            )
-        }
-
-        const [bearer, token] = authHeader.split(' ')
-        if (!bearer || !token) {
-            return errorResponse(
-                res,
-                httpLogs.Unauthorized.code,
-                [httpLogs.Unauthorized.message],
-
-            )
-        }
-        
-        if (bearer !== 'Bearer') {
-            return errorResponse(
-                res,
-                httpLogs.Unauthorized.code,
-                [httpLogs.Unauthorized.message],
-
-            )
-        }
-
-
+        const token = req.cookies.token
         const {id, email, role} = await Verify(token) as JwtPayload
         // TODO: log a warning
         if (!id || !email || !role) {
@@ -80,35 +51,8 @@ export const isUser = async (req: Request, res: Response, next: NextFunction) =>
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
     
     try {
-        const authHeader = req.headers.authorization
-        if (!authHeader) {
-            return errorResponse(
-                res,
-                httpLogs.Unauthorized.code,
-                [httpLogs.Unauthorized.message],
 
-            )
-        }
-
-        const [bearer, token] = authHeader.split(' ')
-        if (!bearer || !token) {
-            return errorResponse(
-                res,
-                httpLogs.Unauthorized.code,
-                [httpLogs.Unauthorized.message],
-
-            )
-        }
-
-        if (bearer !== 'Bearer') {
-            return errorResponse(
-                res,
-                httpLogs.Unauthorized.code,
-                [httpLogs.Unauthorized.message],
-
-            )
-        }
-
+        const token = req.cookies.token
         const {id, email, role} = await Verify(token) as JwtPayload
         // TODO: log a warning
         if (!id || !email || !role) {

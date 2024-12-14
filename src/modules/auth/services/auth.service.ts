@@ -1,16 +1,18 @@
 
-import { httpLogs } from "@Types/logs/httpLogs"
+import { httpLogs } from '@Types/logs/httpLogs'
+import { cookieConfig } from '@config/jwt'
 
-import { User } from "@db/user"
-import { errorService, successService } from "@utils/service"
-import { authLogs } from "./auth.logs"
+import { User } from '@db/user'
+import { errorService, successService } from '@utils/service'
+import { authLogs } from './auth.logs'
 import { Sign } from '@utils/jwt'
-import { exitLogs } from "@Types/logs/exitLogs"
+
+import { Response } from 'express'
 
 
 export class authService {
 
-    static SignIn = async (email: string, password: string) => {
+    static SignIn = async (email: string, password: string, res: Response) => {
 
         try{
             const user = await User.findOne({email})
@@ -30,6 +32,7 @@ export class authService {
             }
     
             const token = Sign({id: (user._id as string), email, role: user.role})
+            res.cookie("token", token, cookieConfig)
             
             return new successService (
                 httpLogs.Accepted.code,
@@ -51,7 +54,7 @@ export class authService {
     }
 
 
-    static SignUp = async (name: string, lastname: string, birthday: Date, gender: string, email: string, password: string) => {
+    static SignUp = async (name: string, lastname: string, birthday: Date, gender: string, email: string, password: string, res: Response) => {
 
         try{
             const user = await User.create({name, lastname, birthday, gender, email, password})
@@ -64,6 +67,7 @@ export class authService {
                 )
             }
             const token = Sign({id: (user._id as string), email, role: user.role})
+            res.cookie("token", token, cookieConfig)
             
             return new successService (
                 httpLogs.Created.code,
