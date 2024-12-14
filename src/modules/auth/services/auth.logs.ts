@@ -12,4 +12,7 @@ export const authLogs = {
     'ERROR_INVALID_CREDENTIALS': {
         message: 'Invalid credentials',
     },
+    'SUCCESS_REGISTER': {
+        message: 'Registration successful',
+    }
 }

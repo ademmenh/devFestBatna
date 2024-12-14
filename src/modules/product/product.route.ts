@@ -1,7 +1,7 @@
 
 import {Router} from 'express'
-import { getProduct, getProducts, createProduct, updateProducts, deleteProduct } from './product.controller'
-import { createProductValidator, updateProductValidator, getProductValidator, deleteProductValidator } from './product.validator'
+import { getProduct, getProducts, createProduct, updateProducts, deleteProduct } from './controller/product.controller'
+import { createProductValidator, updateProductValidator, getProductValidator, deleteProductValidator } from './controller/product.validator'
 import { isUser } from '@middlewares/auth'
 
 export const Product = Router()

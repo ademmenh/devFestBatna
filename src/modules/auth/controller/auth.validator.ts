@@ -16,7 +16,7 @@ export const SignUpValidator = [
         .withMessage('Invalid username length'),
 
     body('birthday')
-        .isDate()
+        .isISO8601()
         .withMessage('Invalid birthday type'),
 
     body('gender')
@@ -34,6 +34,12 @@ export const SignUpValidator = [
     body('password')
         .isLength({min: 8, max: 50})
         .withMessage('Invalid password value'),
+
+    body('enabled')
+        .exists()
+        .custom((value, { req }) => {
+          throw new Error('There is Invalid Fields');
+        })
 
     
 ]

@@ -1,4 +1,4 @@
-export * from './controllers/product.controller'
-export * from './controllers/product.route'
+export * from './controller/product.controller'
+export * from './product.route'
 export * from './services/product.service'
 export * from './services/product.log'

@@ -21,7 +21,7 @@ export const WorkflowLogs = {
         message: 'An error occurred while deleting WORKFLOW.',
     },
     GET_WORKFLOW_SUCCESS: {
-        message: 'WORKFLOW with ID has been retrieved successfully.',
+        message: 'WORKFLOW has been retrieved successfully.',
     },
     GET_WORKFLOW_FAILURE: {
         message: 'An error occurred while retrieving WORKFLOW with ID {id}: {error}.',

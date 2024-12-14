@@ -48,6 +48,11 @@ const UserS = new Schema <UserI> ({
     password: {
         type: String,
         required: true,
+    },
+    enabled: {
+        type: Boolean,
+        required: true,
+    
     }
 },
 {
@@ -61,6 +66,7 @@ UserS.methods.passWordsMatches = async function (password: string): Promise<Bool
 UserS.methods.toResponse = function (): Partial<UserI> {
     const obj: Partial<UserI> = this.toObject()
     delete obj.password
+    delete obj.enabled
     return obj
 
 }

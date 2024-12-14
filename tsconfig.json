@@ -9,6 +9,7 @@
           "@/*": ["src/*"],
           "@config/*": ["config/*"],
           "@db/*": ["db/*"],
+          "@docs/*": ["docs/*"],
           "@logs/*": ["logs/*"],
           "@middlewares/*": ["middlewares/*"],
           "@modules/*": ["modules/*"],

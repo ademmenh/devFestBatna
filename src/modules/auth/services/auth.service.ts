@@ -17,7 +17,7 @@ export class authService {
             if (!user) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [authLogs.ERROR_NOT_FOUND.message],
+                    [authLogs.ERROR_INVALID_CREDENTIALS.message],
             )
             }
     
@@ -53,19 +53,19 @@ export class authService {
     static SignUp = async (name: string, lastname: string, birthday: Date, gender: string, email: string, password: string) => {
 
         try{
-            const user = await User.create({email})
+            const user = await User.create({name, lastname, birthday, gender, email, password})
     
-            if (!await (user).passwordMatches(password)) {
-                return new errorService(
+            if (!user) {
+                return new errorService (
                     httpLogs.BadRequest.code,
-                    [authLogs.ERROR_INVALID_CREDENTIALS.message],
+                    [authLogs.ERROR_LOGIN.message],
+    
                 )
             }
-    
             const token = Sign({id: (user._id as string), email, role: user.role})
             
             return new successService (
-                httpLogs.Accepted.code,
+                httpLogs.Created.code,
                 authLogs.SUCCESS_LOGIN.message,
                 {
                     user,

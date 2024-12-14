@@ -14,6 +14,8 @@ const envExist = (key: string): string => {
 
 export const NODE_ENV = envExist('NODE_ENV')
 
+export const NODE_URL = envExist('NODE_URL')
+
 export const PORT = Number(envExist('PORT'))
 
 export const DB_URI = envExist('DB_URI')
