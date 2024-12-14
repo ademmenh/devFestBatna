@@ -79,6 +79,7 @@ export class authService {
             )
 
         } catch (err) {
+            console.log('SignUp error', err)
             return new errorService (
                 httpLogs.InternalServerError.code,
                 [(err as Error).message],

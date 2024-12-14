@@ -11,10 +11,6 @@ export const SignUpValidator = [
         .isLength({min: 3, max: 20})
         .withMessage('Invalid firstname length'),
 
-    body('username')
-        .isLength({min: 3, max: 20})
-        .withMessage('Invalid username length'),
-
     body('birthday')
         .isISO8601()
         .withMessage('Invalid birthday type'),
@@ -22,10 +18,6 @@ export const SignUpValidator = [
     body('gender')
         .isIn(['F', 'M'])
         .withMessage('Invalid gender value'),
-    
-    body('role')
-        .isIn(['admin', 'user'])
-        .withMessage('Invalid role'),
     
     body('email')
         .isEmail()

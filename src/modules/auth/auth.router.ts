@@ -33,8 +33,6 @@ export const Auth = Router()
  *               birthday:
  *                 type: string
  *                 format: date
- *               role:
- *                 type: string
  *               gender:
  *                 type: string
  *               email:
@@ -61,8 +59,6 @@ export const Auth = Router()
  *                 gender:
  *                   type: string
  *                 email:
- *                   type: string
- *                 password:
  *                   type: string
  *       400:
  *         description: Username or Email already exists

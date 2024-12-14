@@ -37,7 +37,8 @@ const UserS = new Schema <UserI> ({
     role: {
         type: String,
         enum: ['admin', 'user'],
-        required: true,
+        default: 'user',
+
     },
     email: {
         type: String,
@@ -51,7 +52,7 @@ const UserS = new Schema <UserI> ({
     },
     enabled: {
         type: Boolean,
-        required: true,
+        required: false,
     
     }
 },
@@ -59,7 +60,7 @@ const UserS = new Schema <UserI> ({
     timestamps: true
 })
 
-UserS.methods.passWordsMatches = async function (password: string): Promise<Boolean> {
+UserS.methods.passwordMatches = async function (password: string): Promise<Boolean> {
     return await bcrypt.compare(password, this.password)
 }
 
