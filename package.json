@@ -46,7 +46,6 @@
     "@config": "dist/config",
     "@db": "dist/db",
     "@docs": "dist/docs",
-    "@logs": "dist/logs",
     "@middlewares": "dist/middlewares",
     "@modules": "dist/modules",
     "@routes": "dist/routes",
