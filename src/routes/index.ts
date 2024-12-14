@@ -13,7 +13,7 @@ export const setRoutes = (app: Application) => {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(Doc))
     app.use('/auth', Auth)
     app.use('/products', Product)
-    app.use('users', User)
+    app.use('/users', User)
     app.use('/workflows', Workflow)
         
 }

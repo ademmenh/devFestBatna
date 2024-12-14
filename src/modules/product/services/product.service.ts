@@ -2,7 +2,7 @@
 import { ProductI } from '@Types/product'
 import { Product } from '@db/product'
 import { errorService, successService } from '@utils/service'
-import { httpLogs } from '@logs/http'
+import { httpLogs } from '@Types/logs/httpLogs'
 import { productLogs } from './product.log'
 
 

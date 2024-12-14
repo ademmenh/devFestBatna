@@ -1,8 +1,8 @@
 
 import { DB_URI } from './vars'
 
-import { successLogs } from '@logs/success'
-import { exitLogs } from '@logs/exit'
+import { successLogs } from '@Types/logs/successLogs'
+import { exitLogs } from '@Types/logs/exitLogs'
 
 import mongoose from 'mongoose'
 

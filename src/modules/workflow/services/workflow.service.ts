@@ -1,7 +1,7 @@
 
 import { Workflow } from '@db/workflow'
 import { errorService, successService } from '@utils/service'
-import { httpLogs } from '@logs/http'
+import { httpLogs } from '@Types/logs/httpLogs'
 import { WorkflowLogs } from './workflow.log'
 import { WorkflowI } from '@Types/workflow'
 

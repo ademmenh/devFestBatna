@@ -1,5 +1,5 @@
 
-import { httpLogs } from "@logs/http"
+import { httpLogs } from "@Types/logs/httpLogs"
 
 import { Request, Response } from 'express'
 

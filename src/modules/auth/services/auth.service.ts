@@ -1,10 +1,11 @@
 
-import { httpLogs } from "@logs/http"
+import { httpLogs } from "@Types/logs/httpLogs"
 
 import { User } from "@db/user"
 import { errorService, successService } from "@utils/service"
 import { authLogs } from "./auth.logs"
 import { Sign } from '@utils/jwt'
+import { exitLogs } from "@Types/logs/exitLogs"
 
 
 export class authService {
@@ -58,7 +59,7 @@ export class authService {
             if (!user) {
                 return new errorService (
                     httpLogs.BadRequest.code,
-                    [authLogs.ERROR_LOGIN.message],
+                    [httpLogs.BadRequest.message],
     
                 )
             }

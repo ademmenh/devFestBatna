@@ -3,7 +3,7 @@ import { User } from './../db/user'
 import { Request, Response, NextFunction } from 'express'
 import { Verify } from '../utils/jwt'
 import { errorResponse } from '@utils/response'
-import { httpLogs } from '@logs/http'
+import { httpLogs } from '@Types/logs/httpLogs'
 
 
 

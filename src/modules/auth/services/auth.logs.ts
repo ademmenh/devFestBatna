@@ -14,5 +14,8 @@ export const authLogs = {
     },
     'SUCCESS_REGISTER': {
         message: 'Registration successful',
+    },
+    'ERROR_REGISTER': {
+        message: 'Registration failed'
     }
 }

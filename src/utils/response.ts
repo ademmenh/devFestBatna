@@ -1,6 +1,6 @@
 
 
-import { httpLogs } from '@logs/http'
+import { httpLogs } from '@Types/logs/httpLogs'
 import mongoose from 'mongoose'
 import { Response } from 'express'
 
