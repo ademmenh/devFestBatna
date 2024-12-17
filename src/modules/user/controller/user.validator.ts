@@ -23,13 +23,25 @@ export const getAllUserValidator = [
 const updateUserAllowedFields = [
     'firstname',
     'lastname',
-    'email',
+    'birthday',
     'gender',
-    'role',
-    'enable',
+    'email',
 ]
 
 export const updateUserValidator = [
+    
+    body().custom((body, { req }) => {
+        const invalidFields = Object.keys(req.body).filter(
+            (field) => !updateUserAllowedFields.includes(field)
+        )
+
+        if (invalidFields.length > 0) {
+            throw new Error(...invalidFields)
+        }
+
+        return true
+    }),
+
     body('firstname')
         .optional()
         .isString()
@@ -43,40 +55,20 @@ export const updateUserValidator = [
         .withMessage('Invalid lastname')
         .isLength({ min: 3, max: 20 }),
 
-    body('email')
+    body('birthday')
         .optional()
-        .isEmail()
-        .withMessage('Invalid email'),
-
+        .isISO8601()
+        .withMessage('Invalid birthday'),
+    
     body('gender')
         .optional()
         .isIn(['M', 'F'])
         .withMessage('Invalid gender'),
 
-    body('role')
+    body('email')
         .optional()
-        .isIn(['admin', 'user'])
-        .withMessage('Invalid role'),
-
-    body().custom((body, { req }) => {
-        const invalidFields = Object.keys(req.body).filter(
-            (field) => !updateUserAllowedFields.includes(field)
-        )
-
-        if (invalidFields.length > 0) {
-            throw new Error(...invalidFields)
-        }
-
-        return true
-    }),
+        .isEmail()
+        .withMessage('Invalid email'),
 
     validator,
 ]
-
-export const deleteUserValidator = [
-    param('id')
-        .isMongoId()
-        .withMessage('Invalid mongoId'),
-
-    validator,
-];

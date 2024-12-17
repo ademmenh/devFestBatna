@@ -11,7 +11,7 @@ export const isUser = async (req: Request, res: Response, next: NextFunction) =>
 
     try {
         const token = req.cookies.token
-        const {id, email, role} = await Verify(token) as JwtPayload
+        const {id, email, role} = Verify(token) as JwtPayload
         if (!id || !email || !role) {
             return errorResponse(
                 res,
@@ -52,7 +52,7 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
     try {
 
         const token = req.cookies.token
-        const {id, email, role} = await Verify(token) as JwtPayload
+        const {id, email, role} = Verify(token) as JwtPayload
         if (!id || !email || !role) {
             return errorResponse(
                 res,

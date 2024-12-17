@@ -7,7 +7,7 @@ import { userLogs } from './user.logs'
 
 export class UserServices {
 
-    static GetUsers = async (page: number, limit: number) => {
+    static getUsers = async (page: number, limit: number) => {
         try {
             
             const users = await User.find()
@@ -17,7 +17,7 @@ export class UserServices {
             if (users.length === 0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [userLogs.USER_NOT_FOUND.message],
+                    [userLogs.USERS_NOT_FOUND.message],
 
                 )
             }
@@ -28,7 +28,7 @@ export class UserServices {
 
             return new successService(
                 httpLogs.OK.code,
-                userLogs.GET_USER_SUCCESS.message,
+                userLogs.GET_USERS_SUCCESS.message,
                 responseUsers,
 
             )
@@ -42,7 +42,7 @@ export class UserServices {
         }
     }
 
-    static GetUser = async (userId: string) => {
+    static getUser = async (userId: string) => {
         try {
             
             const user = await User.findById(userId)
@@ -70,20 +70,20 @@ export class UserServices {
         }
     }
 
-    static UpdateUser = async (userId: string, userData: Partial<UserI>) => {
+    static banUser = async (userId: string) => {
         try {
-            const user = await User.findByIdAndUpdate(userId, userData, {returnDocument: 'after'})
+            const user = await User.findByIdAndUpdate(userId, {banned: true}, {returnDocument: 'after'})
+
             if (!user) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [userLogs.USER_NOT_FOUND.message],
-
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                userLogs.USER_UPDATE_SUCCESS.message,
+                userLogs.BAN_USER_SUCCESS.message,
                 user.toResponse(),
                 
             )
@@ -96,11 +96,10 @@ export class UserServices {
             )
         }
     }
-    
-    static DeleteUser = async (userId: string) => {
-        try {
-            const user = await User.findByIdAndDelete(userId);
 
+    static updateUser = async (userId: string, userData: Partial<UserI>) => {
+        try {
+            const user = await User.findByIdAndUpdate(userId, userData, {returnDocument: 'after'})
             if (!user) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -111,9 +110,38 @@ export class UserServices {
 
             return new successService(
                 httpLogs.OK.code,
-                userLogs.USER_UPDATE_SUCCESS.message,
+                userLogs.UPDATE_USER_SUCCESS.message,
                 user.toResponse(),
                 
+            )
+        } catch (err) {
+            return new errorService(
+                httpLogs.InternalServerError.code,
+                [userLogs.USER_ERROR_GENERIC.message],
+                (err as Error).message,
+
+            )
+        }
+    }
+
+    static deleteUser = async (userId: string) => {
+        try {
+            const user = await User.findByIdAndUpdate(userId, {deleted: true}, {returnDocument: 'after'});
+            console.log(user)
+            
+            if (!user) {
+                return new errorService(
+                    httpLogs.BadRequest.code,
+                    [userLogs.USER_NOT_FOUND.message],
+
+                )
+            }
+
+            return new successService(
+                httpLogs.OK.code,
+                userLogs.UPDATE_USER_SUCCESS.message,
+                { id: user._id },
+
             )
         } catch (err) {
             return new errorService(

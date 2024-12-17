@@ -1,7 +1,7 @@
 
 import { Router } from 'express'
-import { getUsers, getUser, updateUser, deleteUser } from './controller/user.controller'
-import { updateUserValidator, getUserValidator, deleteUserValidator } from './controller/user.validator'
+import { getUsers, getUser, banUser, updateMe, deleteMe } from './controller/user.controller'
+import { updateUserValidator, getUserValidator } from './controller/user.validator'
 import { isUser, isAdmin } from '@middlewares/auth'
 
 export const User = Router()
@@ -105,7 +105,7 @@ export const User = Router()
  *                   example: "Internal Server Error."
  */
 
-User.route('/').get(isAdmin, getUsers)
+User.route('/:id').get(isAdmin, getUsers)
 
 /**
  * @swagger
@@ -243,7 +243,7 @@ User.route('/').get(isAdmin, getUsers)
  *                   type: string
  *                   example: "Internal Server Error."
  */
-User.route('/:id').get(isUser, getUserValidator, getUser)
+User.route('/:id').get(isAdmin, getUserValidator, getUser)
 
 
 /**
@@ -261,35 +261,110 @@ User.route('/:id').get(isUser, getUserValidator, getUser)
  *         description: The ID of the user to update.
  *         schema:
  *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: The user's first name.
- *               lastname:
- *                 type: string
- *                 description: The user's last name.
- *               birthday:
- *                 type: string
- *                 format: date
- *                 description: The user's birth date.
- *               gender:
- *                 type: string
- *                 description: The user's gender.
- *               role:
- *                 type: string
- *                 enum:
- *                   - admin
- *                   - user
- *                 description: The user's role (admin or user).
- *               email:
- *                 type: string
- *                 description: The user's email address.
+ *     responses:
+ *       200:
+ *         description: User details updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "success"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: The user's unique identifier (ObjectId).
+ *                     name:
+ *                       type: string
+ *                       description: The user's first name.
+ *                     lastname:
+ *                       type: string
+ *                       description: The user's last name.
+ *                     birthday:
+ *                       type: string
+ *                       format: date
+ *                       description: The user's birth date.
+ *                     gender:
+ *                       type: string
+ *                       description: The user's gender.
+ *                     role:
+ *                       type: string
+ *                       description: The user's role (admin or user).
+ *                     email:
+ *                       type: string
+ *                       description: The user's email address.
+ *                     banned:
+ *                       type: boolean
+ *                       description: Whether the user is banned or not.
+ *       400:
+ *         description: Invalid input data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid input data."
+ *       401:
+ *         description: Unauthorized – User not authorized to update.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Unauthorized access."
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "User not found."
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Internal Server Error."
+ */
+
+User.route('/:id/ban').patch(isUser, banUser)
+
+
+/**
+ * @swagger
+ * /users/me:
+ *   patch:
+ *     summary: Update user details by ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User details updated successfully.
@@ -380,24 +455,17 @@ User.route('/:id').get(isUser, getUserValidator, getUser)
  *                   example: "Internal Server Error."
  */
 
-User.route('/:id').patch(isUser, updateUserValidator, updateUser)
+User.route('/me').patch(isUser, updateUserValidator, updateMe)
 
 
 /**
  * @swagger
- * /users/{id}:
+ * /users/me:
  *   delete:
- *     summary: Delete a user by ID
+ *     summary: Delete me
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The ID of the user to delete.
- *         schema:
- *           type: string
  *     responses:
  *       200:
  *         description: User deleted successfully.
@@ -465,4 +533,4 @@ User.route('/:id').patch(isUser, updateUserValidator, updateUser)
  *                   type: string
  *                   example: "Internal Server Error."
  */
-User.route('/:id').delete(isUser, deleteUserValidator, deleteUser)
+User.route('/me').delete(isUser, deleteMe)

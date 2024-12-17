@@ -5,8 +5,17 @@ export const userLogs = {
     CREATE_USER_ERROR: {
         message: 'User created failure.',
     },
-    USER_EXIST: {
-        message: 'User already exists.',
+    GET_USER_SUCCESS: {
+        message: 'User has been retrieved successfully.',
+    },
+    GET_USER_FAILURE: {
+        message: 'An error occurred while retrieving user',
+    },
+    GET_USERS_SUCCESS: {
+        message: 'Users are retrieved successfully.',
+    },
+    GET_USERS_FAILURE: {
+        message: 'An error occurred while retrieving users',
     },
     UPDATE_USER_SUCCESS: {
         message: 'User is updated successfully.',
@@ -20,22 +29,20 @@ export const userLogs = {
     DELETE_USER_ERROR: {
         message: 'An error occurred while deleting user.',
     },
-    GET_USER_SUCCESS: {
-        message: 'User with ID has been retrieved successfully.',
+    BAN_USER_SUCCESS: {
+        message: 'User has been banned successfully.',
     },
-    GET_USER_FAILURE: {
-        message: 'An error occurred while retrieving user with ID {id}: {error}.',
+    USER_EXIST: {
+        message: 'User already exists.',
     },
     USER_NOT_FOUND: {
         message: 'User not found.',
     },
-    USER_UPDATE_SUCCESS: {
-        message: 'User is updated.',
-    },
-    USER_UPDATE_FAILURE: {
-        message: 'User is not updated.',
+    USERS_NOT_FOUND: {
+        message: 'Users not found.',
     },
     USER_ERROR_GENERIC: {
         message: 'an error occured',
     },
+
 }

@@ -7,6 +7,7 @@ interface UserI {
     role: string,
     email: string,
     password: string,
-    enabled: boolean,
+    banned: boolean,
+    deleted: boolean,
     
 }
