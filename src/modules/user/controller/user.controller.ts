@@ -39,7 +39,8 @@ export const banUser = async (req: Request, res: Response) => {
 
 export const updateMe = async (req: Request, res: Response) => {
     const token = req.cookies.token
-    const { id } = Verify(token)
+    const id = (req.user?._id as string)
+
     const userData = req.body
 
     const result = await UserServices.updateUser(id, userData)
@@ -50,8 +51,8 @@ export const updateMe = async (req: Request, res: Response) => {
 
 export const deleteMe = async (req: Request, res: Response) => {
     const token = req.cookies.token
-    const {id} = Verify(token)
-    
+    const id = (req.user?._id as string)
+
     const result = await UserServices.deleteUser(id);
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data);
