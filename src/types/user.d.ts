@@ -9,5 +9,7 @@ interface UserI {
     password: string,
     banned: boolean,
     deleted: boolean,
+    createdAt: Date,
+    updatedAt: Date,
     
 }

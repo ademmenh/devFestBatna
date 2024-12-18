@@ -1,7 +1,8 @@
 
-import { Types } from 'mongoose'
+import { Schema } from 'mongoose'
 
 declare interface WorkflowI {
+    userId: Schema.Types.ObjectId
     data: {
         name: string
         prompt: String
@@ -10,6 +11,8 @@ declare interface WorkflowI {
         x: number
         y: number
     }
-    userId: Types.ObjectId
-    type: string
+    type: string,
+    createdAt: Date,
+    updatedAt: Date,
+    
 }

@@ -1,59 +1,59 @@
 
-import { ProductI } from '@Types/product'
-import { Product } from '@db/product'
+import { OutputI } from '@Types/output'
+import { Output } from '@db/output'
 import { errorService, successService } from '@utils/service'
 import { httpLogs } from '@Types/logs/httpLogs'
-import { productLogs } from './product.log'
+import { outputLogs } from './output.log'
 
 
-export class ProcutServices {
-    static getProduct = async (userId: string, productId: string) => {
+export class OutputServices {
+    static getOutput = async (userId: string, productId: string) => {
         try {
             
-            const product = await Product.findOne({_id: productId, userId})
+            const product = await Output.findOne({_id: productId, userId})
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [outputLogs.OUTPUT_NOT_FOUND.message],
 
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.GET_PRODUCT_SUCCESS.message,
+                outputLogs.GET_OUTPUT_SUCCESS.message,
                 product,
 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [outputLogs.OUTPUT_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
         }
     }
     
-    static getProducts = async (userId: string, page: number, limit: number) => {
+    static getOutputs = async (userId: string, page: number, limit: number) => {
         try {
             
-            const products = await Product.find({userId})
+            const products = await Output.find({userId})
                 .skip((page-1)*limit)
                 .limit(limit)
 
             if (products.length===0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [outputLogs.OUTPUT_NOT_FOUND.message],
 
                 )
             }
-            const totalItems = await Product.countDocuments()
+            const totalItems = await Output.countDocuments()
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.GET_PRODUCT_SUCCESS.message,
+                outputLogs.GET_OUTPUT_SUCCESS.message,
                 {
                     products,
                     pagination: {
@@ -67,35 +67,35 @@ export class ProcutServices {
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [outputLogs.OUTPUT_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
         }
     }
 
-    static createProduct = async (userId: string, productData: ProductI) => {
+    static createOutput = async (userId: string, productData: OutputI) => {
         try {
 
-            const product = await Product.create({...productData, userId})
+            const product = await Output.create({...productData, userId})
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [outputLogs.OUTPUT_NOT_FOUND.message],
 
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.CREATE_PRODUCT_SUCCESS.message,
+                outputLogs.CREATE_OUTPUT_SUCCESS.message,
                 product,
                 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [outputLogs.OUTPUT_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
@@ -103,58 +103,58 @@ export class ProcutServices {
     }
     
 
-    static updateProduct = async (userId: string, productId: string, productData: Partial<ProductI>) => {
+    static updateOutput = async (userId: string, productId: string, productData: Partial<OutputI>) => {
         try {
 
-            let product = await Product.deleteOne({_id: userId, productId})
+            let product = await Output.deleteOne({_id: userId, productId})
 
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [outputLogs.OUTPUT_NOT_FOUND.message],
 
                 )
             }
 
             return new successService(
                 httpLogs.OK.code,
-                productLogs.UPDATE_PRODUCT_SUCCESS.message,
+                outputLogs.UPDATE_OUTPUT_SUCCESS.message,
                 product,
                 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [outputLogs.OUTPUT_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
         }
     }
     
-    static deleteProduct = async (userId: string, productId: string) => {
+    static deleteOutput = async (userId: string, productId: string) => {
         try {
 
-            let product = await Product.deleteOne({_id: userId, productId})
+            let product = await Output.deleteOne({_id: userId, productId})
             
             if (!product) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [productLogs.PRODUCT_NOT_FOUND.message],
+                    [outputLogs.OUTPUT_NOT_FOUND.message],
 
                 )
             }
             
             return new successService(
                 httpLogs.OK.code,
-                productLogs.UPDATE_PRODUCT_SUCCESS.message,
+                outputLogs.UPDATE_OUTPUT_SUCCESS.message,
                 product
                 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
-                [productLogs.PRODUCT_ERROR_GENERIC.message],
+                [outputLogs.OUTPUT_ERROR_GENERIC.message],
                 (err as Error).message,
 
             )
