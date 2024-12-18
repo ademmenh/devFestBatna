@@ -1,7 +1,7 @@
 
 import {Router} from 'express'
-import { getWorkflow, getWorkflows, createWorkflow, updateWorkflow, deleteWorkflow } from './controller/workflow.controller'
-import { createWorkflowValidator, updateWorkflowValidator, getWorkflowValidator, deleteWorkflowValidator } from './controller/workflow.validator'
+import { getWorkflow, getWorkflows, createWorkflow, updateWorkflow, deleteWorkflow } from '@modules/workflow/controller/workflow.controller'
+import { createWorkflowValidator, updateWorkflowValidator, getWorkflowValidator, deleteWorkflowValidator } from '@modules/workflow/controller/workflow.validator'
 import { isUser } from '@middlewares/auth'
 
 export const Workflow = Router()
@@ -20,9 +20,8 @@ export const Workflow = Router()
  * /workflows:
  *   get:
  *     summary: Get workflows
- *     tags: [workflows]
- *     security:
- *       - cookieAuth: []
+ *     tags: 
+ *          - workflows
  *     parameters:
  *       - in: query
  *         name: page
@@ -104,84 +103,146 @@ export const Workflow = Router()
  */
 Workflow.route('/').get(isUser, getWorkflows)
 
+
 /**
  * @swagger
  * /workflows:
  *   post:
- *     summary: Create a workflow
- *     tags: [workflows]
- *     security:
- *       - cookieAuth: []
+ *     summary: Create a new workflow
+ *     tags:
+ *       - workflows
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - userId
+ *               - name
+ *               - description
+ *               - nodes
+ *               - vectors
  *             properties:
- *               data:
- *                 type: object
- *                 properties:
- *                   label:
- *                     type: string
- *                     description: The label of the workflow.
- *                   prompt:
- *                     type: string
- *                     description: Optional prompt for the workflow (can be null or empty).
- *               position:
- *                 type: object
- *                 properties:
- *                   x:
- *                     type: number
- *                     description: X-coordinate for the position of the workflow.
- *                   y:
- *                     type: number
- *                     description: Y-coordinate for the position of the workflow.
  *               userId:
  *                 type: string
- *                 description: The ID of the user associated with the workflow (ObjectId).
- *               type:
+ *                 description: The unique identifier of the user creating the workflow.
+ *               name:
  *                 type: string
- *                 description: The type of workflow (e.g., "manual", "automated").
+ *                 description: The name of the workflow.
+ *               description:
+ *                 type: string
+ *                 description: A brief description of the workflow.
+ *               nodes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - data
+ *                     - position
+ *                   properties:
+ *                     data:
+ *                       type: object
+ *                       required:
+ *                         - label
+ *                       properties:
+ *                         label:
+ *                           type: string
+ *                           description: Label of the node.
+ *                     position:
+ *                       type: object
+ *                       required:
+ *                         - x
+ *                         - y
+ *                       properties:
+ *                         x:
+ *                           type: number
+ *                           description: The x-coordinate of the node's position.
+ *                         y:
+ *                           type: number
+ *                           description: The y-coordinate of the node's position.
+ *               vectors:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - prev
+ *                     - next
+ *                   properties:
+ *                     prev:
+ *                       type: integer
+ *                       nullable: true
+ *                       description: The ID of the previous node in the vector (null if none).
+ *                     next:
+ *                       type: integer
+ *                       nullable: true
+ *                       description: The ID of the next node in the vector (null if none).
+ *               createdAt:
+ *                 type: string
+ *                 format: date-time
+ *                 description: The date and time when the workflow was created.
+ *               updatedAt:
+ *                 type: string
+ *                 format: date-time
+ *                 description: The date and time when the workflow was last updated.
  *     responses:
- *       200:
- *         description: Workflows have been retrieved successfully.
+ *       '201':
+ *         description: Successfully created the workflow
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 status:
+ *                 id:
  *                   type: string
- *                   example: "success"
- *                 data:
+ *                   format: uuid
+ *                   description: The unique identifier of the newly created workflow.
+ *                 userId:
+ *                   type: string
+ *                   format: uuid
+ *                   description: The unique identifier of the user who created the workflow.
+ *                 name:
+ *                   type: string
+ *                   description: The name of the workflow.
+ *                 description:
+ *                   type: string
+ *                   description: A brief description of the workflow.
+ *                 nodes:
  *                   type: array
  *                   items:
  *                     type: object
  *                     properties:
- *                       label:
- *                         type: string
- *                         description: The label of the workflow.
- *                       prompt:
- *                         type: string
- *                         description: Optional prompt for the workflow (can be null or empty).
+ *                       data:
+ *                         type: object
+ *                         properties:
+ *                           label:
+ *                             type: string
  *                       position:
  *                         type: object
  *                         properties:
  *                           x:
  *                             type: number
- *                             description: X-coordinate for the position of the workflow.
  *                           y:
  *                             type: number
- *                             description: Y-coordinate for the position of the workflow.
- *                       userId:
- *                         type: string
- *                         description: The ID of the user associated with the workflow (ObjectId).
- *                       type:
- *                         type: string
- *                         description: The type of workflow (e.g., "manual", "automated").
-  *       400:
- *         description: Workflow not found.
+ *                 vectors:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       prev:
+ *                         type: integer
+ *                         nullable: true
+ *                       next:
+ *                         type: integer
+ *                         nullable: true
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *       '400':
+ *         description: Invalid input or missing required fields.
  *         content:
  *           application/json:
  *             schema:
@@ -192,8 +253,8 @@ Workflow.route('/').get(isUser, getWorkflows)
  *                   example: "error"
  *                 message:
  *                   type: string
- *                   example: "Workflow not found"
- *       500:
+ *                   example: "Invalid input."
+ *       '500':
  *         description: Internal server error.
  *         content:
  *           application/json:
@@ -215,8 +276,6 @@ Workflow.route('/').post(isUser, createWorkflowValidator, createWorkflow)
  *   get:
  *     summary: Get workflows
  *     tags: [workflows]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: query
  *         name: page
@@ -260,9 +319,6 @@ Workflow.route('/').post(isUser, createWorkflowValidator, createWorkflow)
  *               userId:
  *                 type: string
  *                 description: The ID of the user associated with the workflow (ObjectId).
- *               type:
- *                 type: string
- *                 description: The type of workflow (e.g., "manual", "automated").
  *     responses:
  *       200:
  *         description: Workflows have been retrieved successfully.
@@ -297,9 +353,6 @@ Workflow.route('/').post(isUser, createWorkflowValidator, createWorkflow)
  *                       userId:
  *                         type: string
  *                         description: The ID of the user associated with the workflow (ObjectId).
- *                       type:
- *                         type: string
- *                         description: The type of workflow (e.g., "manual", "automated").
  *       400:
  *         description: Workflow not found.
  *         content:
@@ -375,10 +428,6 @@ Workflow.route('/:id').get(isUser, getWorkflowValidator, getWorkflow)
  *                 type: string
  *                 description: The ID of the user associated with the workflow (ObjectId).
  *                 nullable: true
- *               type:
- *                 type: string
- *                 description: The type of workflow (e.g., "manual", "automated").
- *                 nullable: true
  *     responses:
  *       200:
  *         description: Workflow has been updated successfully.
@@ -412,10 +461,6 @@ Workflow.route('/:id').get(isUser, getWorkflowValidator, getWorkflow)
  *                     userId:
  *                       type: string
  *                       description: The updated user ID associated with the workflow (ObjectId).
- *                       nullable: true
- *                     type:
- *                       type: string
- *                       description: The updated type of workflow (e.g., "manual", "automated").
  *                       nullable: true
  *       400:
  *         description: Bad request or invalid input.

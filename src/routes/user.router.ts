@@ -1,7 +1,7 @@
 
 import { Router } from 'express'
-import { getUsers, getUser, banUser, updateMe, deleteMe } from './controller/user.controller'
-import { updateUserValidator, getUserValidator } from './controller/user.validator'
+import { getUsers, getUser, banUser, updateMe, deleteMe } from '@modules/user/controller/user.controller'
+import { updateUserValidator, getUserValidator } from '@modules/user/controller/user.validator'
 import { isUser, isAdmin } from '@middlewares/auth'
 
 export const User = Router()
@@ -22,7 +22,7 @@ export const User = Router()
  *     summary: Get all users
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - cookieAuth: []
  *     description: Get a list of all users. Only accessible by admin.
  *     parameters:
  *       - in: query
@@ -114,7 +114,7 @@ User.route('/:id').get(isAdmin, getUsers)
  *     summary: Update user details by ID
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -253,7 +253,7 @@ User.route('/:id').get(isAdmin, getUserValidator, getUser)
  *     summary: Update user details by ID
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -364,7 +364,7 @@ User.route('/:id/ban').patch(isUser, banUser)
  *     summary: Update user details by ID
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: User details updated successfully.
@@ -465,7 +465,7 @@ User.route('/me').patch(isUser, updateUserValidator, updateMe)
  *     summary: Delete me
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: User deleted successfully.

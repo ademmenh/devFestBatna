@@ -9,7 +9,7 @@ export enum nodesLables {
 
 }
 
-declare interface NodeI {
+export interface NodeI {
     data: {
         label: string
     }
@@ -19,13 +19,13 @@ declare interface NodeI {
     }
 }
 
-declare interface VectorI {
+export interface VectorI {
     prev: number | null
     next: number | null
 
 }
 
-declare interface WorkflowI {
+export interface WorkflowI {
     userId: Schema.Types.ObjectId
     name: string
     description: string

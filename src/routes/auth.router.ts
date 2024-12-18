@@ -1,6 +1,6 @@
 
-import { SignUp, SignIn } from './controller/auth.controller'
-import { SignInValidator, SignUpValidator } from './controller/auth.validator'
+import { SignUp, SignIn } from '@modules/auth/controller/auth.controller'
+import { SignInValidator, SignUpValidator } from '@modules/auth/controller/auth.validator'
 
 import { Router } from 'express'
 

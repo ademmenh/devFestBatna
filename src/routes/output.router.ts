@@ -1,7 +1,7 @@
 
 import { Router } from 'express'
-import { getOutput, getOutputs, createOutput, deleteOutput } from './controller/output.controller'
-import { createOutputValidator, getOutputValidator, deleteOutputValidator } from './controller/output.validator'
+import { getOutput, getOutputs, createOutput, deleteOutput } from '@modules/output/controller/output.controller'
+import { createOutputValidator, getOutputValidator, deleteOutputValidator } from '@modules/output/controller/output.validator'
 import { isUser } from '@middlewares/auth'
 
 export const Output = Router()
