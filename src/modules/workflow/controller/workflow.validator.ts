@@ -1,9 +1,13 @@
 
+import { NodeI, nodesLables, VectorI } from '@Types/workflow'
 import { validator } from '@middlewares/validator'
 import { param, body } from 'express-validator'
 
+
 export const getWorkflowValidator = [
-    param('id').isMongoId().withMessage('Invalid mongoId'),
+    param('id')
+    .isMongoId()
+    .withMessage('Invalid workflow id.'),
 
     validator,
 ]
@@ -21,84 +25,110 @@ export const getAllWorkflowValidator = [
 ]
 
 export const createWorkflowValidator = [
-    body('data.label')
+    body('name')
         .isString()
-        .withMessage('Invalid lable type.')
-        .isLength({ min: 3, max: 20 })
-        .withMessage('Invalid lable length.'),
-
-    body('data.prompt')
+        .withMessage('Invalid name')
+        .isLength({min: 1, max: 20}),
+    
+    body('description')
         .isString()
-        .withMessage('Invalid prompt type.')
-        .isLength({ min: 0, max: 1000 })
-        .withMessage('Invalid prompt length.'),
+        .withMessage('Invalid description')
+        .isLength({min: 0, max: 50}),
+    
+    body('nodes')
+        .isArray()
+        .withMessage('Invalid nodes type.')
+        .custom((array: NodeI[]) => {
+            array.forEach((elem: NodeI) => {
+                if (typeof elem.data.label !== 'string') {
+                    throw new Error('Invalid nodes label type.')
+                }
+                if (Object.keys(nodesLables).includes(elem.data.label) ) {
+                    throw new Error('Invalid nodes label.')
+                }
+            })
+        })
+        .custom((array: NodeI[]) => {
+            array.forEach((elem: NodeI) => {
+                if (typeof elem.position.x !== 'number') {
+                    throw new Error('Invalid nodes x position type.')
+                }
+                if (typeof elem.position.y !== 'number') {
+                    throw new Error('Invalid nodes y position type.')
+                }
+            })
+        }),
 
+    body('vectors')
+        .isArray()
+        .withMessage('Invalid vectors type')
+        .custom((array: VectorI[]) => {
+            array.forEach((elem: VectorI) => {
+                if (!Number.isInteger(elem.prev)){
+                    throw new Error('Invalid vectors prev type.')
+                }
+                if (!Number.isInteger(elem.next)){
+                    throw new Error('Invalid vectors next type.')
+                }
+            })
+        }),
 
-    body('position.x')
-        .isFloat()
-        .withMessage('Invalid position.x'),
-        
-    body('position.y')
-    .isFloat()
-    .withMessage('Invalid position.y'),
-
-    body('type')
-        .isString()
-        .withMessage('Invalid type'),
-
-        validator,
-]
-
-const updateWrokflowAllowedFields = [
-    'data.label',
-    'data.prompt',
-    'position.x',
-    'position.y',
-    'type',
+    validator,
 ]
 
 export const updateWorkflowValidator = [
-    body('data.label')
-        .optional()
+
+    param('id')
+        .isMongoId()
+        .withMessage('Invalid workflow id.'),
+
+    body('name')
         .isString()
-        .withMessage('Invalid lable type.')
-        .isLength({ min: 3, max: 20 })
-        .withMessage('Invalid lable length.'),
-
-    body('data.prompt')
-        .optional()
+        .withMessage('Invalid name')
+        .isLength({min: 1, max: 20}),
+    
+    body('description')
         .isString()
-        .withMessage('Invalid prompt type.')
-        .isLength({ min: 3, max: 1000 })
-        .withMessage('Invalid prompt length.'),
+        .withMessage('Invalid description')
+        .isLength({min: 0, max: 50}),
+    
+    body('nodes')
+        .isArray()
+        .withMessage('Invalid nodes type.')
+        .custom((array: NodeI[]) => {
+            array.forEach((elem: NodeI) => {
+                if (typeof elem.data.label !== 'string') {
+                    throw new Error('Invalid nodes label type.')
+                }
+                if (Object.keys(nodesLables).includes(elem.data.label) ) {
+                    throw new Error('Invalid nodes label.')
+                }
+            })
+        })
+        .custom((array: NodeI[]) => {
+            array.forEach((elem: NodeI) => {
+                if (typeof elem.position.x !== 'number') {
+                    throw new Error('Invalid nodes x position type.')
+                }
+                if (typeof elem.position.y !== 'number') {
+                    throw new Error('Invalid nodes y position type.')
+                }
+            })
+        }),
 
-    body('position.x')
-        .optional()
-        .isFloat()
-        .withMessage('Invalid position.x'),
-        
-    body('position.y')
-    .optional()
-    .isFloat()
-    .withMessage('Invalid position.y'),
-
-    body('type')
-        .optional()
-        .isString()
-        .withMessage('Invalid type'),
-
-
-    body().custom((body, { req }) => {
-        const invalidFields = Object.keys(req.body).filter(
-            (field) => !updateWrokflowAllowedFields.includes(field)
-        )
-
-        if (invalidFields.length > 0) {
-            throw new Error(...invalidFields)
-        }
-
-        return true
-    }),
+    body('vectors')
+        .isArray()
+        .withMessage('Invalid vectors type')
+        .custom((array: VectorI[]) => {
+            array.forEach((elem: VectorI) => {
+                if (!Number.isInteger(elem.prev)){
+                    throw new Error('Invalid vectors prev type.')
+                }
+                if (!Number.isInteger(elem.next)){
+                    throw new Error('Invalid vectors next type.')
+                }
+            })
+        }),
 
     validator,
 ]
@@ -106,7 +136,7 @@ export const updateWorkflowValidator = [
 export const deleteWorkflowValidator = [
     param('id')
         .isMongoId()
-        .withMessage('Invalid mongoId'),
+        .withMessage('Invalid workflow id.'),
 
     validator,
 ];

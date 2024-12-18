@@ -103,34 +103,34 @@ export class OutputServices {
     }
     
 
-    static updateOutput = async (userId: string, productId: string, productData: Partial<OutputI>) => {
-        try {
+    // static updateOutput = async (userId: string, productId: string, productData: Partial<OutputI>) => {
+    //     try {
 
-            let product = await Output.deleteOne({_id: userId, productId})
+    //         let product = await Output.deleteOne({_id: userId, productId})
 
-            if (!product) {
-                return new errorService(
-                    httpLogs.BadRequest.code,
-                    [outputLogs.OUTPUT_NOT_FOUND.message],
+    //         if (!product) {
+    //             return new errorService(
+    //                 httpLogs.BadRequest.code,
+    //                 [outputLogs.OUTPUT_NOT_FOUND.message],
 
-                )
-            }
+    //             )
+    //         }
 
-            return new successService(
-                httpLogs.OK.code,
-                outputLogs.UPDATE_OUTPUT_SUCCESS.message,
-                product,
+    //         return new successService(
+    //             httpLogs.OK.code,
+    //             outputLogs.UPDATE_OUTPUT_SUCCESS.message,
+    //             product,
                 
-            )
-        } catch (err) {
-            return new errorService(
-                httpLogs.InternalServerError.code,
-                [outputLogs.OUTPUT_ERROR_GENERIC.message],
-                (err as Error).message,
+    //         )
+    //     } catch (err) {
+    //         return new errorService(
+    //             httpLogs.InternalServerError.code,
+    //             [outputLogs.OUTPUT_ERROR_GENERIC.message],
+    //             (err as Error).message,
 
-            )
-        }
-    }
+    //         )
+    //     }
+    // }
     
     static deleteOutput = async (userId: string, productId: string) => {
         try {

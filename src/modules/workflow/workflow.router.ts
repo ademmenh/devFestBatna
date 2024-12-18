@@ -333,7 +333,7 @@ Workflow.route('/:id').get(isUser, getWorkflowValidator, getWorkflow)
 /**
  * @swagger
  * /workflows/{id}:
- *   patch:
+ *   put:
  *     summary: Update a workflow
  *     tags: [workflows]
  *     security:
@@ -445,7 +445,7 @@ Workflow.route('/:id').get(isUser, getWorkflowValidator, getWorkflow)
  *                   example: ["Internal server error."]
  */
 
-Workflow.route('/:id').patch(isUser, updateWorkflowValidator, updateWorkflow)
+Workflow.route('/:id').put(isUser, updateWorkflowValidator, updateWorkflow)
 
 /**
  * @swagger

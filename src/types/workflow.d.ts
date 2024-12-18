@@ -1,18 +1,37 @@
 
 import { Schema } from 'mongoose'
 
-declare interface WorkflowI {
-    userId: Schema.Types.ObjectId
+export enum nodesLables {
+    'upload image',
+    'chatgpt',
+    'scheduler',
+    'email'
+
+}
+
+declare interface NodeI {
     data: {
-        name: string
-        prompt: String
+        label: string
     }
     position: {
         x: number
         y: number
     }
-    type: string,
-    createdAt: Date,
-    updatedAt: Date,
+}
+
+declare interface VectorI {
+    prev: number | null
+    next: number | null
+
+}
+
+declare interface WorkflowI {
+    userId: Schema.Types.ObjectId
+    name: string
+    description: string
+    nodes: NodeI[]
+    vectors: VectorI[]
+    createdAt: Date
+    updatedAt: Date
     
 }

@@ -29,10 +29,10 @@ export const getWorkflow = async (req: Request, res: Response) => {
 
 
 export const createWorkflow = async (req: Request, res: Response) => {
-    const workflowData = req.body
+    const {name, description, nodes, vectors} = req.body
     const userId = (req.user as UserD)._id as string
 
-    const result = await WorkflowServices.createWorkflow(userId, workflowData)
+    const result = await WorkflowServices.createWorkflow(userId, name, description, nodes, vectors)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
     if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
@@ -40,11 +40,10 @@ export const createWorkflow = async (req: Request, res: Response) => {
 
 export const updateWorkflow = async (req: Request, res: Response) => {
     const workflowId = req.params.id
-    const workflowData = req.body
+    const {name, description, nodes, vectors} = req.body
     const userId = (req.user as UserD)._id as string
 
-
-    const result = await WorkflowServices.updateWorkflow(userId, workflowId, workflowData)
+    const result = await WorkflowServices.updateWorkflow(userId, workflowId, name, description, nodes, vectors)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
     if (result instanceof errorService) return errorResponse(res, result.code, result.errors, result.error)

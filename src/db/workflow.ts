@@ -1,7 +1,7 @@
 
 import { Model, Schema, model, Document } from 'mongoose'
 
-import { WorkflowI } from '@Types/workflow' 
+import { NodeI, VectorI, WorkflowI } from '@Types/workflow' 
 
 interface WorkflowD extends WorkflowI, Document {
     createdAt: Date,
@@ -9,16 +9,12 @@ interface WorkflowD extends WorkflowI, Document {
     
 }
 
-const WorkflowS = new Schema <WorkflowI> ({
+const NodeS = new Schema <NodeI> ({
     data: {
         label: {
             type: String,
-            required: true,    
+            required: true,
         },
-        prompt: {
-            type: String,
-            required: false,
-        }
     },
     position: {
         x: {
@@ -30,20 +26,50 @@ const WorkflowS = new Schema <WorkflowI> ({
           required: true
         }
     },
+})
+
+const VectorI = new Schema <VectorI> ({
+    prev: {
+        type: Number,
+        required: false,
+
+    },
+    next: {
+        type: Number,
+        required: false,
+
+    }
+
+})
+
+const WorkflowS = new Schema <WorkflowI> ({
     userId: {
         type: Schema.Types.ObjectId,
+        required: true,
         ref: 'User',
+        
+    },
+    name: {
+        type: String,
         required: true,
 
     },
-    type: {
+    description: {
         type: String,
-        required: true
+        required: false,
+        default: '',
+        
     },
-},
-{
-    timestamps: true
-})
+    nodes: {
+        type: [NodeS],
+        required: false,
 
+    },
+    vectors: {
+        type: [VectorI],
+        required: false,
+
+    }
+})
 
 export const Workflow = model<WorkflowI, Model<WorkflowD>>('Workflow', WorkflowS)

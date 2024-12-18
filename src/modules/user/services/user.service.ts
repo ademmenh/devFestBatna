@@ -17,7 +17,7 @@ export class UserServices {
             if (users.length === 0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [userLogs.USERS_NOT_FOUND.message],
+                    [userLogs.INVALID_PAGE.message],
 
                 )
             }

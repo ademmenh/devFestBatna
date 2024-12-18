@@ -38,11 +38,11 @@ export const userLogs = {
     USER_NOT_FOUND: {
         message: 'User not found.',
     },
-    USERS_NOT_FOUND: {
-        message: 'Users not found.',
-    },
     USER_ERROR_GENERIC: {
         message: 'an error occured',
+    },
+    INVALID_PAGE: {
+        message: 'Invalid page for users.',
     },
 
 }

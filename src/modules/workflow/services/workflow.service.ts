@@ -1,4 +1,5 @@
 
+import { NodeI, VectorI } from '@Types/workflow';
 import { Workflow } from '@db/workflow'
 import { errorService, successService } from '@utils/service'
 import { httpLogs } from '@Types/logs/httpLogs'
@@ -14,6 +15,7 @@ export class WorkflowServices {
                 userId,
                 workflowId
             })
+            
             if (!workflow) {
                 return new errorService(
                     httpLogs.BadRequest.code,
@@ -32,7 +34,7 @@ export class WorkflowServices {
             return new errorService(
                 httpLogs.InternalServerError.code,
                 [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
-                (err as Error).message,
+                (err as Error),
 
             )
         }
@@ -41,14 +43,14 @@ export class WorkflowServices {
     static getWorkflows = async (userId: string, page: number, limit: number) => {
         try {
             
-            const products = await Workflow.find({userId})
+            const workflows = await Workflow.find({userId})
                 .skip((page-1)*limit)
                 .limit(limit)
 
-            if (products.length === 0) {
+            if (workflows.length === 0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
-                    [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
+                    [WorkflowLogs.INVALID_PAGE.message],
 
                 )
             }
@@ -56,9 +58,9 @@ export class WorkflowServices {
 
             return new successService(
                 httpLogs.OK.code,
-                WorkflowLogs.GET_WORKFLOW_SUCCESS.message,
+                WorkflowLogs.GET_WORKFLOWS_SUCCESS.message,
                 {
-                    products,
+                    workflows,
                     pagination: {
                         currentPage: page,
                         totalPages: Math.ceil(totalItems / limit),
@@ -71,17 +73,18 @@ export class WorkflowServices {
             return new errorService(
                 httpLogs.InternalServerError.code,
                 [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
-                (err as Error).message,
+                (err as Error),
 
             )
         }
     }
 
-    static createWorkflow = async (userId: string, productData: WorkflowI) => {
+    static createWorkflow = async (userId: string, name: string, description: string, nodes: NodeI[], vectors: VectorI[]) => {
         try {
 
-            const product = await Workflow.create({...productData, userId})
-            if (!product) {
+            const workflow = await Workflow.create({userId, name, description, nodes, vectors})
+
+            if (!workflow) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [WorkflowLogs.WORKFLOW_NOT_FOUND.message],
@@ -92,24 +95,24 @@ export class WorkflowServices {
             return new successService(
                 httpLogs.OK.code,
                 WorkflowLogs.CREATE_WORKFLOW_SUCCESS.message,
-                product,
+                workflow,
                 
             )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
                 [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
-                (err as Error).message,
+                (err as Error),
 
             )
         }
     }
     
 
-    static updateWorkflow = async (userId: string, workflowId: string, workflowData: Partial<WorkflowI>) => {
+    static updateWorkflow = async (userId: string, workflowId: string, name: string, description: string, nodes: NodeI[], vectors: VectorI[]) => {
         try {
 
-            let workflow = await Workflow.findOneAndUpdate({_id: workflowId, userId}, workflowData, {returnDocument: 'after'})
+            let workflow = await Workflow.findOneAndUpdate({_id: workflowId, userId}, {name, description, nodes, vectors}, {upsert: true, returnDocument: 'after'})
 
             if (!workflow) {
                 return new errorService(
@@ -122,7 +125,7 @@ export class WorkflowServices {
             return new errorService(
                 httpLogs.InternalServerError.code,
                 [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
-                (err as Error).message,
+                (err as Error),
 
             )
         }
@@ -151,7 +154,7 @@ export class WorkflowServices {
             return new errorService(
                 httpLogs.InternalServerError.code,
                 [WorkflowLogs.WORKFLOW_ERROR_GENERIC.message],
-                (err as Error).message,
+                (err as Error),
 
             )
         }
