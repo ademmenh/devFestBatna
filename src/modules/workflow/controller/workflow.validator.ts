@@ -1,8 +1,15 @@
 
-import { NodeI, nodesLables, VectorI } from '@Types/workflow'
+import { NodeI, VectorI } from '@Types/workflow'
 import { validator } from '@middlewares/validator'
 import { param, body } from 'express-validator'
 
+const nodesLables = [
+    'upload image',
+    'chatgpt',
+    'scheduler',
+    'email'
+
+]
 
 export const getWorkflowValidator = [
     param('id')
@@ -43,20 +50,18 @@ export const createWorkflowValidator = [
                 if (typeof elem.data.label !== 'string') {
                     throw new Error('Invalid nodes label type.')
                 }
-                if (Object.keys(nodesLables).includes(elem.data.label) ) {
+                if (!nodesLables.includes(elem.data.label) ) {
                     throw new Error('Invalid nodes label.')
                 }
-            })
-        })
-        .custom((array: NodeI[]) => {
-            array.forEach((elem: NodeI) => {
-                if (typeof elem.position.x !== 'number') {
+                if (elem.position.x !== undefined && typeof elem.position.x !== 'number') {
                     throw new Error('Invalid nodes x position type.')
                 }
-                if (typeof elem.position.y !== 'number') {
+                if (elem.position.y !== undefined && typeof elem.position.y !== 'number') {
                     throw new Error('Invalid nodes y position type.')
                 }
             })
+
+            return true
         }),
 
     body('vectors')
@@ -64,13 +69,17 @@ export const createWorkflowValidator = [
         .withMessage('Invalid vectors type')
         .custom((array: VectorI[]) => {
             array.forEach((elem: VectorI) => {
-                if (!Number.isInteger(elem.prev)){
+                if ((elem.next === undefined && elem.prev !== undefined) || (elem.next !== undefined && elem.prev === undefined)){
+                    throw new Error('Invalid vector type.')
+                }
+                if (elem.prev !== undefined && !Number.isInteger(elem.prev)){
                     throw new Error('Invalid vectors prev type.')
                 }
-                if (!Number.isInteger(elem.next)){
+                if (elem.next !== undefined && !Number.isInteger(elem.next)){
                     throw new Error('Invalid vectors next type.')
                 }
             })
+            return true
         }),
 
     validator,
@@ -100,20 +109,18 @@ export const updateWorkflowValidator = [
                 if (typeof elem.data.label !== 'string') {
                     throw new Error('Invalid nodes label type.')
                 }
-                if (Object.keys(nodesLables).includes(elem.data.label) ) {
+                if (!nodesLables.includes(elem.data.label) ) {
                     throw new Error('Invalid nodes label.')
                 }
-            })
-        })
-        .custom((array: NodeI[]) => {
-            array.forEach((elem: NodeI) => {
-                if (typeof elem.position.x !== 'number') {
+                if (elem.position.x !== undefined && typeof elem.position.x !== 'number') {
                     throw new Error('Invalid nodes x position type.')
                 }
-                if (typeof elem.position.y !== 'number') {
+                if (elem.position.y !== undefined && typeof elem.position.y !== 'number') {
                     throw new Error('Invalid nodes y position type.')
                 }
             })
+
+            return true
         }),
 
     body('vectors')
@@ -121,14 +128,20 @@ export const updateWorkflowValidator = [
         .withMessage('Invalid vectors type')
         .custom((array: VectorI[]) => {
             array.forEach((elem: VectorI) => {
-                if (!Number.isInteger(elem.prev)){
+                if ((elem.next === undefined && elem.prev !== undefined) || (elem.next !== undefined && elem.prev === undefined)){
+                    throw new Error('Invalid vector type.')
+                }
+                if (elem.prev !== undefined && !Number.isInteger(elem.prev)){
                     throw new Error('Invalid vectors prev type.')
                 }
-                if (!Number.isInteger(elem.next)){
+                if (elem.next !== undefined && !Number.isInteger(elem.next)){
                     throw new Error('Invalid vectors next type.')
                 }
             })
+            return true
         }),
+    
+    
 
     validator,
 ]

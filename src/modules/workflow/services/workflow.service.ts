@@ -4,7 +4,6 @@ import { Workflow } from '@db/workflow'
 import { errorService, successService } from '@utils/service'
 import { httpLogs } from '@Types/logs/httpLogs'
 import { WorkflowLogs } from './workflow.log'
-import { WorkflowI } from '@Types/workflow'
 
 
 export class WorkflowServices {
@@ -111,7 +110,6 @@ export class WorkflowServices {
 
     static updateWorkflow = async (userId: string, workflowId: string, name: string, description: string, nodes: NodeI[], vectors: VectorI[]) => {
         try {
-
             let workflow = await Workflow.findOneAndUpdate({_id: workflowId, userId}, {name, description, nodes, vectors}, {upsert: true, returnDocument: 'after'})
 
             if (!workflow) {
@@ -121,6 +119,13 @@ export class WorkflowServices {
 
                 )
             }
+
+            return new successService(
+                httpLogs.OK.code,
+                WorkflowLogs.UPDATE_WORKFLOW_SUCCESS.message,
+                workflow,
+                
+            )
         } catch (err) {
             return new errorService(
                 httpLogs.InternalServerError.code,
@@ -131,10 +136,11 @@ export class WorkflowServices {
         }
     }
     
-    static deleteWorkflow = async (userId: string, productId: string) => {
+    static deleteWorkflow = async (userId: string, workflowId: string) => {
         try {
 
-            let workflow = await Workflow.findOneAndDelete({_id: userId, productId})
+            const workflow = await Workflow.findOneAndDelete({_id: workflowId, userId})
+            console.log(workflow)
             
             if (!workflow) {
                 return new errorService(
@@ -146,7 +152,7 @@ export class WorkflowServices {
             
             return new successService(
                 httpLogs.OK.code,
-                WorkflowLogs.UPDATE_WORKFLOW_SUCCESS.message,
+                WorkflowLogs.DELETE_WORKFLOW_SUCCESS.message,
                 workflow
                 
             )

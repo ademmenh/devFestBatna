@@ -12,7 +12,7 @@ export const validator = (req: Request, res: Response, next: NextFunction): void
         return errorResponse (
             res,
             httpLogs.BadRequest.code,
-            [httpLogs.BadRequest.message],
+            errors.array().map(error => error.msg),
         )
     }
     next();

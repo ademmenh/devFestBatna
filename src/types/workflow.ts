@@ -1,13 +1,7 @@
 
 import { Schema } from 'mongoose'
 
-export enum nodesLables {
-    'upload image',
-    'chatgpt',
-    'scheduler',
-    'email'
 
-}
 
 export interface NodeI {
     data: {

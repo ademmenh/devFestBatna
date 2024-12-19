@@ -15,6 +15,10 @@ const NodeS = new Schema <NodeI> ({
             type: String,
             required: true,
         },
+        number: {
+            type: Number,
+            required: true,
+        }
     },
     position: {
         x: {
@@ -26,6 +30,9 @@ const NodeS = new Schema <NodeI> ({
           required: true
         }
     },
+},
+{
+    _id: false
 })
 
 const VectorI = new Schema <VectorI> ({
@@ -40,6 +47,9 @@ const VectorI = new Schema <VectorI> ({
 
     }
 
+},
+{
+    _id: false
 })
 
 const WorkflowS = new Schema <WorkflowI> ({
