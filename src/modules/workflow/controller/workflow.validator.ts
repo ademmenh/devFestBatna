@@ -53,10 +53,10 @@ export const createWorkflowValidator = [
                 if (!nodesLables.includes(elem.data.label) ) {
                     throw new Error('Invalid nodes label.')
                 }
-                if (elem.position.x !== undefined && typeof elem.position.x !== 'number') {
+                if (typeof elem.position.x !== 'number') {
                     throw new Error('Invalid nodes x position type.')
                 }
-                if (elem.position.y !== undefined && typeof elem.position.y !== 'number') {
+                if (typeof elem.position.y !== 'number') {
                     throw new Error('Invalid nodes y position type.')
                 }
             })

@@ -140,7 +140,6 @@ export class WorkflowServices {
         try {
 
             const workflow = await Workflow.findOneAndDelete({_id: workflowId, userId})
-            console.log(workflow)
             
             if (!workflow) {
                 return new errorService(

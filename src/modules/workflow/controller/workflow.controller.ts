@@ -35,7 +35,7 @@ export const createWorkflow = async (req: Request, res: Response) => {
     const result = await WorkflowServices.createWorkflow(userId, name, description, nodes, vectors)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
-    if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
+    if (result instanceof errorService) return errorResponse(res, result.code, result.errors, result.error)
 }
 
 export const updateWorkflow = async (req: Request, res: Response) => {
