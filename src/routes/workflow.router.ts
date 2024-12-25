@@ -490,7 +490,7 @@ Workflow.route('/:id').get(isUser, getWorkflowValidator, getWorkflow)
  *                   example: ["Internal server error."]
  */
 
-Workflow.route('/:id').put(isUser, updateWorkflowValidator, updateWorkflow)
+Workflow.route('/').put(isUser, updateWorkflowValidator, updateWorkflow)
 
 /**
  * @swagger

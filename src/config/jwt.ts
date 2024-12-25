@@ -8,7 +8,7 @@ export const jwtConfig = {
 export const cookieConfig = {
     maxAge: JWT_EXPIRATION_TIME,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: NODE_ENV === 'production',
     sameSite: 'strict' as 'strict' | 'lax' | 'none',
     
 }

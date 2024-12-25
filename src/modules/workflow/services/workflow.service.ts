@@ -108,9 +108,9 @@ export class WorkflowServices {
     }
     
 
-    static updateWorkflow = async (userId: string, workflowId: string, name: string, description: string, nodes: NodeI[], vectors: VectorI[]) => {
+    static updateWorkflow = async (userId: string, id: string, name: string, description: string, nodes: NodeI[], vectors: VectorI[]) => {
         try {
-            let workflow = await Workflow.findOneAndUpdate({_id: workflowId, userId}, {name, description, nodes, vectors}, {upsert: true, returnDocument: 'after'})
+            let workflow = await Workflow.findOneAndUpdate({_id: id, userId}, {name, description, nodes, vectors}, {upsert: true, returnDocument: 'after'})
 
             if (!workflow) {
                 return new errorService(

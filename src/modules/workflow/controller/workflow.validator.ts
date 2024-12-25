@@ -87,7 +87,7 @@ export const createWorkflowValidator = [
 
 export const updateWorkflowValidator = [
 
-    param('id')
+    body('id')
         .isMongoId()
         .withMessage('Invalid workflow id.'),
 
