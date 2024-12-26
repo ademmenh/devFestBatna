@@ -1,0 +1,48 @@
+{
+    "post": {
+        "summary": "Create Workflow",
+        "tags": ["Workflow"],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "./../components/workflow.schema.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Workflow Created",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/workflow.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

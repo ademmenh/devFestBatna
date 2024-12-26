@@ -39,10 +39,11 @@ export const createWorkflow = async (req: Request, res: Response) => {
 }
 
 export const updateWorkflow = async (req: Request, res: Response) => {
-    const {_id, name, description, nodes, vectors} = req.body
+    const { id } = req.params
+    const {name, description, nodes, vectors} = req.body
     const userId = (req.user as UserD)._id as string
 
-    const result = await WorkflowServices.updateWorkflow(userId, _id, name, description, nodes, vectors)
+    const result = await WorkflowServices.updateWorkflow(userId, id, name, description, nodes, vectors)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
     if (result instanceof errorService) return errorResponse(res, result.code, result.errors, result.error)

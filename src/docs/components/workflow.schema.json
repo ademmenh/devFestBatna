@@ -1,0 +1,87 @@
+{
+    "type": "object",
+    "properties": {
+        "userId": {
+            "type": "string",
+            "example": "4123hl5k32j2153h23k5jh"
+        },
+        "name": {
+            "type": "string",
+            "example": "workflow1"
+        },
+        "description": {
+            "type": "string",
+            "example": "this workflow automate something."
+        },
+        "nodes": {
+            "type": "array",
+            "items": {
+                "data": {
+                    "type": "object",
+                    "label": {
+                        "type": "string",
+                        "required": true,
+                        "example": "email"
+                    },
+                    "number": {
+                        "type": "integer",
+                        "required": true,
+                        "example": 1
+                    }
+                },
+                "position": {
+                    "type": "object",
+                    "x": {
+                        "type": "number",
+                        "format": "float",
+                        "required": true,
+                        "example": 5.0
+                    },
+                    "y": {
+                        "type": "number",
+                        "format": "float",
+                        "required": true,
+                        "example": 5.0
+                    }
+                },
+                "example": [
+                        {
+                            "data": {
+                                "label": "email",
+                                "number": 1
+                            },
+                            "position": {
+                                "x": 5.0,
+                                "y": 5.0
+                            }
+                        }
+                    ]
+            }
+        },
+        "vectors": {
+            "type": "array",
+            "items": {
+                "prev": {
+                    "type": "integer",
+                    "required": true,
+                    "example": 4
+                },
+                "next": {
+                    "type": "integer",
+                    "required": true,
+                    "example": 6
+                }
+            },
+            "example": [
+                {
+                    "prev": 4,
+                    "next": 6
+                },
+                {
+                    "prev": 7,
+                    "next": 8
+                }
+            ]
+        }
+    }
+}

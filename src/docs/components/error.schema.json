@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "status": {
+            "type": "string",
+            "enum": ["error"],
+            "example": "error"
+        },
+        "message": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

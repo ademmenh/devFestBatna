@@ -1,0 +1,74 @@
+{
+    "post": {
+        "tags": ["Auth"],
+        "summary": "User Logs-in",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "email": { "type": "string" },
+                            "password": { "type": "string" }
+                        },
+                        "example": {
+                            "email": "johndoe@gmail.com",
+                            "password": "johndoejohndoe"
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "201": {
+                "description": "User LogedIn successfully",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "_id": { "type": "string" },
+                                "name": { "type": "string" },
+                                "lastname": { "type": "string" },
+                                "birthday": { "type": "string" },
+                                "gender": { "type": "string" },
+                                "role": { "type": "string" },
+                                "email": { "type": "string" }
+                            },
+                            "example": {
+                                "_id": "421kj3421h5d23493245",
+                                "name": "John",
+                                "lastname": "Doe",
+                                "birthday": "2000-01-01",
+                                "gender": "M",
+                                "role": "user",
+                                "email": "johndoe@gmail.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

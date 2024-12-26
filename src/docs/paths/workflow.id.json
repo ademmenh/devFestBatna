@@ -1,0 +1,153 @@
+{
+    "get": {
+        "tags": ["Workflow"],
+        "summary": "Get Workflow",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "worflow id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+            "200": {
+                "description": "Get Workflow Success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/workflow.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "put": {
+        "summary": "Update Workflow",
+        "tags": ["Workflow"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "worflow id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "./../components/workflow.schema.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Workflow Updated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/workflow.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "delete": {
+        "summary": "Workflow Deleted",
+        "tags": ["Workflow"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "worflow id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+            "200": {
+                "description": "Workflow Deleted",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/workflow.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
