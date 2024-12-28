@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My API",
+        "title": "MyWkflow API",
         "version": "1.0.0",
         "description": "MyWrkflow swagger documentation."
     },

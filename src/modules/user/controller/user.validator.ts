@@ -21,11 +21,10 @@ export const getAllUserValidator = [
 ]
 
 const updateUserAllowedFields = [
-    'firstname',
+    'name',
     'lastname',
     'birthday',
     'gender',
-    'email',
 ]
 
 export const updateUserValidator = [
@@ -42,10 +41,10 @@ export const updateUserValidator = [
         return true
     }),
 
-    body('firstname')
+    body('name')
         .optional()
         .isString()
-        .withMessage('Invalid firstanme')
+        .withMessage('Invalid name')
         .isLength({ min: 3, max: 20 })
         .withMessage('firstname'),
 
@@ -65,10 +64,7 @@ export const updateUserValidator = [
         .isIn(['M', 'F'])
         .withMessage('Invalid gender'),
 
-    body('email')
-        .optional()
-        .isEmail()
-        .withMessage('Invalid email'),
-
     validator,
 ]
+
+// TODO: updae email and password

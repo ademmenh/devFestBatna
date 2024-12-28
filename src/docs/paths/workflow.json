@@ -1,4 +1,63 @@
 {
+    "get": {
+        "tags": ["Workflow"],
+        "summary": "Get Workflows",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "page number",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "limit the documents returned ",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+            "200": {
+                "description": "Get Workflows Success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "./../components/workflow.schema.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    },
     "post": {
         "summary": "Create Workflow",
         "tags": ["Workflow"],
