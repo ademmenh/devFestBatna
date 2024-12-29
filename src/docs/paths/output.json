@@ -1,0 +1,106 @@
+{
+    "get": {
+        "tags": ["Output"],
+        "summary": "Get Outputs",
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "required": true,
+                "default": 1,
+                "description": "page number",
+                "schema": {
+                  "type": "integer"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "required": true,
+                "default": 12,
+                "description": "limit the documents returned ",
+                "schema": {
+                  "type": "integer"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Get Output Success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/output.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "post": {
+        "tags": ["Output"],
+        "summary": "Create Output",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "./../components/output.schema.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Workflow Updated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/output.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

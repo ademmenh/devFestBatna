@@ -1,0 +1,33 @@
+{
+    "type": "object",
+    "properties": {
+        "userId": {
+            "type": "string",
+            "example": "67618a680199c290f1cbd96b"
+        },
+        "outputs": {
+            "text": {
+                "type": "string",
+                "example": "this is just a text"
+            },
+            "image": {
+                "type": "string",
+                "example": "https://www.example.com/images/sample-image.jpg"
+            },
+            "video": {
+                "type": "string",
+                "example": "https://www.example.com/videos/sample-video.mp4"
+            },
+            "document": {
+                "type": "string",
+                "example": "https://www.example.com/docs/sample-document.pdf"
+            },
+            "example": {
+                "text": "this is just a text",
+                "image": "https://www.example.com/images/sample-image.jpg",
+                "video": "https://www.example.com/videos/sample-video.mp4",
+                "document": "https://www.example.com/docs/sample-document.pdf"
+            } 
+        }
+    }
+}

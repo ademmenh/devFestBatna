@@ -1,0 +1,778 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MyWkflow API",
+    "version": "1.0.0",
+    "description": "MyWrkflow swagger documentation."
+  },
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth Management"
+    },
+    {
+      "name": "Workflow",
+      "description": "Workflow Management"
+    },
+    {
+      "name": "Output",
+      "description": "Output Management"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lastname": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "_id": "421kj3421h5d23493245",
+                  "name": "John",
+                  "lastname": "Doe",
+                  "birthday": "2000-01-01",
+                  "gender": "M",
+                  "email": "johndoe@gmail.com",
+                  "password": "johndoejohndoe"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "_id": "421kj3421h5d23493245",
+                  "name": "John",
+                  "lastname": "Doe",
+                  "birthday": "2000-01-01",
+                  "gender": "M",
+                  "role": "user",
+                  "email": "johndoe@gmail.com"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Logs-in",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "johndoe@gmail.com",
+                  "password": "johndoejohndoe"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User LogedIn successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "lastname": {
+                      "type": "string"
+                    },
+                    "birthday": {
+                      "type": "string"
+                    },
+                    "gender": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "_id": "421kj3421h5d23493245",
+                    "name": "John",
+                    "lastname": "Doe",
+                    "birthday": "2000-01-01",
+                    "gender": "M",
+                    "role": "user",
+                    "email": "johndoe@gmail.com"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workflow": {
+      "get": {
+        "tags": [
+          "Workflow"
+        ],
+        "summary": "Get Workflows",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "default": 1,
+            "description": "page number",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "default": 12,
+            "description": "limit the documents returned ",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Workflows Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Workflow"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Workflow",
+        "tags": [
+          "Workflow"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Workflow"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workflow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workflow/{id}": {
+      "get": {
+        "tags": [
+          "Workflow"
+        ],
+        "summary": "Get Workflow",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "worflow id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Workflow Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workflow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Workflow",
+        "tags": [
+          "Workflow"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "worflow id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Workflow"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workflow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Workflow Deleted",
+        "tags": [
+          "Workflow"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "worflow id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workflow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/output": {
+      "get": {
+        "tags": [
+          "Output"
+        ],
+        "summary": "Get Outputs",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "default": 1,
+            "description": "page number",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "default": 12,
+            "description": "limit the documents returned ",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Output Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Output"
+        ],
+        "summary": "Create Output",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/output/{id}": {
+      "get": {
+        "tags": [
+          "Output"
+        ],
+        "summary": "Get Output",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "output id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Output Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Output": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "67618a680199c290f1cbd96b"
+          },
+          "outputs": {
+            "text": {
+              "type": "string",
+              "example": "this is just a text"
+            },
+            "image": {
+              "type": "string",
+              "example": "https://www.example.com/images/sample-image.jpg"
+            },
+            "video": {
+              "type": "string",
+              "example": "https://www.example.com/videos/sample-video.mp4"
+            },
+            "document": {
+              "type": "string",
+              "example": "https://www.example.com/docs/sample-document.pdf"
+            },
+            "example": {
+              "text": "this is just a text",
+              "image": "https://www.example.com/images/sample-image.jpg",
+              "video": "https://www.example.com/videos/sample-video.mp4",
+              "document": "https://www.example.com/docs/sample-document.pdf"
+            }
+          }
+        }
+      },
+      "Workflow": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "67618a680199c290f1cbd96b"
+          },
+          "name": {
+            "type": "string",
+            "example": "workflow1"
+          },
+          "description": {
+            "type": "string",
+            "example": "this workflow automate something."
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "data": {
+                "type": "object",
+                "label": {
+                  "type": "string",
+                  "required": true,
+                  "example": "email"
+                },
+                "number": {
+                  "type": "integer",
+                  "required": true,
+                  "example": 1
+                }
+              },
+              "position": {
+                "type": "object",
+                "x": {
+                  "type": "number",
+                  "format": "float",
+                  "required": true,
+                  "example": 5
+                },
+                "y": {
+                  "type": "number",
+                  "format": "float",
+                  "required": true,
+                  "example": 5
+                }
+              },
+              "example": [
+                {
+                  "data": {
+                    "label": "email",
+                    "number": 1
+                  },
+                  "position": {
+                    "x": 5,
+                    "y": 5
+                  }
+                }
+              ]
+            }
+          },
+          "vectors": {
+            "type": "array",
+            "items": {
+              "prev": {
+                "type": "integer",
+                "required": true,
+                "example": 4
+              },
+              "next": {
+                "type": "integer",
+                "required": true,
+                "example": 6
+              }
+            },
+            "example": [
+              {
+                "prev": 4,
+                "next": 6
+              },
+              {
+                "prev": 7,
+                "next": 8
+              }
+            ]
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "error"
+            ],
+            "example": "error"
+          },
+          "message": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
