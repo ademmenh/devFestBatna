@@ -1,17 +1,17 @@
 
 import { OutputI } from '@Types/output'
-import { Output } from '@db/output'
+import { Output, OutputD } from '@db/output'
 import { errorService, successService } from '@utils/service'
 import { httpLogs } from '@Types/logs/httpLogs'
 import { outputLogs } from './output.log'
 
 
 export class OutputServices {
-    static getOutput = async (userId: string, productId: string) => {
+    static getOutput = async (userId: string, outputId: string) => {
         try {
-            
-            const product = await Output.findOne({_id: productId, userId})
-            if (!product) {
+            // TODO: if accessable
+            const output = await Output.findOne({_id: outputId, userId})
+            if (!outputId) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [outputLogs.OUTPUT_NOT_FOUND.message],
@@ -22,7 +22,7 @@ export class OutputServices {
             return new successService(
                 httpLogs.OK.code,
                 outputLogs.GET_OUTPUT_SUCCESS.message,
-                product,
+                (output as OutputD).toUser(),
 
             )
         } catch (err) {
@@ -37,12 +37,12 @@ export class OutputServices {
     
     static getOutputs = async (userId: string, page: number, limit: number) => {
         try {
-            
-            const products = await Output.find({userId})
+            // TODO: if accessable
+            const outputs = await Output.find({userId})
                 .skip((page-1)*limit)
                 .limit(limit)
 
-            if (products.length===0) {
+            if (outputs.length===0) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [outputLogs.OUTPUT_NOT_FOUND.message],
@@ -51,11 +51,15 @@ export class OutputServices {
             }
             const totalItems = await Output.countDocuments()
 
+            const outputsRes = outputs.map((output) => {
+                return output.toUser()
+            })
+
             return new successService(
                 httpLogs.OK.code,
                 outputLogs.GET_OUTPUT_SUCCESS.message,
                 {
-                    products,
+                    outputsRes,
                     pagination: {
                         currentPage: page,
                         totalPages: Math.ceil(totalItems / limit),
@@ -74,11 +78,11 @@ export class OutputServices {
         }
     }
 
-    static createOutput = async (userId: string, productData: OutputI) => {
+    static createOutput = async (userId: string, outputs: OutputI) => {
         try {
 
-            const product = await Output.create({...productData, userId})
-            if (!product) {
+            const output = await Output.create({userId, outputs})
+            if (!output) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [outputLogs.OUTPUT_NOT_FOUND.message],
@@ -89,10 +93,11 @@ export class OutputServices {
             return new successService(
                 httpLogs.OK.code,
                 outputLogs.CREATE_OUTPUT_SUCCESS.message,
-                product,
+                output.toUser(),
                 
             )
         } catch (err) {
+            console.log(err)
             return new errorService(
                 httpLogs.InternalServerError.code,
                 [outputLogs.OUTPUT_ERROR_GENERIC.message],
@@ -101,54 +106,25 @@ export class OutputServices {
             )
         }
     }
-    
 
-    // static updateOutput = async (userId: string, productId: string, productData: Partial<OutputI>) => {
-    //     try {
-
-    //         let product = await Output.deleteOne({_id: userId, productId})
-
-    //         if (!product) {
-    //             return new errorService(
-    //                 httpLogs.BadRequest.code,
-    //                 [outputLogs.OUTPUT_NOT_FOUND.message],
-
-    //             )
-    //         }
-
-    //         return new successService(
-    //             httpLogs.OK.code,
-    //             outputLogs.UPDATE_OUTPUT_SUCCESS.message,
-    //             product,
-                
-    //         )
-    //     } catch (err) {
-    //         return new errorService(
-    //             httpLogs.InternalServerError.code,
-    //             [outputLogs.OUTPUT_ERROR_GENERIC.message],
-    //             (err as Error).message,
-
-    //         )
-    //     }
-    // }
-    
-    static deleteOutput = async (userId: string, productId: string) => {
+    static deleteOutput = async (userId: string, outputId: string) => {
         try {
 
-            let product = await Output.deleteOne({_id: userId, productId})
+            const output = await Output.findOneAndUpdate({userId, outputId}, {accessable: false})
+            // TODO: increase the available storage by half of the deleted data.
             
-            if (!product) {
+            if (!output) {
                 return new errorService(
                     httpLogs.BadRequest.code,
                     [outputLogs.OUTPUT_NOT_FOUND.message],
 
                 )
             }
-            
+
             return new successService(
                 httpLogs.OK.code,
-                outputLogs.UPDATE_OUTPUT_SUCCESS.message,
-                product
+                outputLogs.DELETE_OUTPUT_SUCCESS.message,
+                output.toUser(),
                 
             )
         } catch (err) {

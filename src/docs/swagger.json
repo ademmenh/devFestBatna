@@ -13,7 +13,11 @@
         {
             "name": "Workflow",
             "description": "Workflow Management"
-          }
+        },
+        {
+            "name": "Output",
+            "description": "Output Management"
+        }
     ],
     "paths": {
         "/auth/register": {
@@ -27,10 +31,19 @@
         },
         "/workflow/{id}": {
             "$ref": "./paths/workflow.id.json"
+        },
+        "/output": {
+            "$ref": "./paths/output.json"
+        },
+        "/output/{id}": {
+            "$ref": "./paths/output.id.json"
         }
     },
     "components": {
         "schemas": {
+            "Output": {
+                "$ref": "./components/output.schema.json"
+            },
             "Workflow": {
                 "$ref": "./components/workflow.schema.json"
             },

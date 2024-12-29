@@ -7,14 +7,14 @@ import { UserD } from "@db/user"
 
 
 export const getWorkflows = async (req: Request, res: Response) => {
-    const page = parseInt(req.params.page) || 1
-    const limit = parseInt(req.params.limit) || 12
+    const page = parseInt(req.query.page as string) || 1
+    const limit = parseInt(req.query.limit as string) || 12
     const userId = (req.user as UserD)._id as string
 
     const result = await WorkflowServices.getWorkflows(userId, page, limit)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
-    if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
+    if (result instanceof errorService) return errorResponse(res, result.code, result.errors, result.error)
 }
 
 export const getWorkflow = async (req: Request, res: Response) => {
@@ -24,7 +24,7 @@ export const getWorkflow = async (req: Request, res: Response) => {
     const result = await WorkflowServices.getWorkflow(userId, workflowrId)
 
     if (result instanceof successService) return successResponse(res, result.code, result.message, result.data)
-    if (result instanceof errorResponse) return errorResponse(res, result.code, result.errors, result.error)
+    if (result instanceof errorService) return errorResponse(res, result.code, result.errors, result.error)
 }
 
 

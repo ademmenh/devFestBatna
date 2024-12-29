@@ -16,7 +16,7 @@ export const setRoutes = async (app: Application) => {
 
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     app.use('/auth', Auth)
-    app.use('/products', Output)
+    app.use('/outputs', Output)
     app.use('/users', User)
     app.use('/workflows', Workflow)
         

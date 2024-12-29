@@ -69,12 +69,14 @@ UserS.methods.passwordMatches = async function (password: string): Promise<Boole
 }
 
 UserS.methods.toResponse = function (): Partial<UserI> {
-    const obj: Partial<UserI> = this.toObject()
+    const obj = this.toObject()
     delete obj.password
     delete obj.banned
     return obj
 
 }
+
+// TODO: toUser
 
 UserS.pre('save', async function (next) {
     try {

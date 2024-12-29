@@ -1,7 +1,7 @@
 
 import { NodeI, VectorI } from '@Types/workflow'
 import { validator } from '@middlewares/validator'
-import { param, body } from 'express-validator'
+import { param, body, query } from 'express-validator'
 
 const nodesLables = [
     'upload image',
@@ -19,14 +19,17 @@ export const getWorkflowValidator = [
     validator,
 ]
 
-export const getAllWorkflowValidator = [
-    param('page')
-    .isInt()
-    .withMessage('Invalid page'),
+export const getWorkflowsValidator = [
+    query('page')
+        .optional()
+        .isInt({min: 1})
+        .withMessage('Invalid page.'),
     
-    param('limit')
-    .isInt()
-    .withMessage('Invalid page'),
+    query('limit')
+        .optional()
+        .isInt({min: 1, max: 24})
+        .withMessage('Invalid limit.'),
+    
 
     validator,
 ]
@@ -152,4 +155,4 @@ export const deleteWorkflowValidator = [
         .withMessage('Invalid workflow id.'),
 
     validator,
-];
+]

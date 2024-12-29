@@ -53,7 +53,7 @@ export class WorkflowServices {
 
                 )
             }
-            const totalItems = await Workflow.countDocuments()
+            const totalItems = await Workflow.countDocuments({userId})
 
             return new successService(
                 httpLogs.OK.code,

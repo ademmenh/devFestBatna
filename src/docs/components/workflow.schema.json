@@ -3,7 +3,7 @@
     "properties": {
         "userId": {
             "type": "string",
-            "example": "4123hl5k32j2153h23k5jh"
+            "example": "67618a680199c290f1cbd96b"
         },
         "name": {
             "type": "string",
