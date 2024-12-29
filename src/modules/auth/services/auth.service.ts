@@ -34,7 +34,7 @@ export class authService {
             const token = Sign({id: (user._id as string), email, role: user.role})
             res.cookie("token", token, cookieConfig)
 
-            const resUser = user.toResponse()
+            const resUser = user.toUser()
             
             return new successService (
                 httpLogs.Accepted.code,
@@ -70,7 +70,7 @@ export class authService {
             }
             const token = Sign({id: (user._id as string), email, role: user.role})
             res.cookie("token", token, cookieConfig)
-            const resUser = user.toResponse()
+            const resUser = user.toUser()
             
             return new successService (
                 httpLogs.Created.code,

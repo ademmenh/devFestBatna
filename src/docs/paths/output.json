@@ -26,11 +26,14 @@
         ],
         "responses": {
             "200": {
-                "description": "Get Output Success",
+                "description": "Get Outputs Success",
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "./../components/output.schema.json"
+                            "type": "array",
+                            "items": {
+                                "$ref": "./../components/output.schema.json"
+                            }
                         }
                     }
                 }

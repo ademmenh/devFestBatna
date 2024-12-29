@@ -9,7 +9,8 @@ export interface UserD extends UserI, Document {
     createdAt: Date,
     updatedAt: Date,
     passwordMatches(password: string): Promise<Boolean>
-    toResponse(): Partial<UserI>
+    toAdmin(): Partial<UserI>
+    toUser(): Partial<UserI>
     
 }
 
@@ -68,15 +69,20 @@ UserS.methods.passwordMatches = async function (password: string): Promise<Boole
     return await bcrypt.compare(password, this.password)
 }
 
-UserS.methods.toResponse = function (): Partial<UserI> {
+UserS.methods.toAdmin = function (): Partial<UserI> {
     const obj = this.toObject()
     delete obj.password
-    delete obj.banned
     return obj
 
 }
 
-// TODO: toUser
+UserS.methods.toUser = function (): Partial<UserI> {
+    const obj = this.toObject()
+    delete obj.banned
+    delete obj.deleted
+    return obj
+
+}
 
 UserS.pre('save', async function (next) {
     try {

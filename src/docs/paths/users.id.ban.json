@@ -1,0 +1,50 @@
+{
+    "put": {
+        "summary": "Ban User",
+        "tags": ["User"],
+        "parameters": [
+            {
+                "name": "id",
+                "in": "path",
+                "description": "User ID",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "67618a680199c290f1cbd96b"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Workflow Updated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/user.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

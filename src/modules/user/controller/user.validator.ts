@@ -8,7 +8,7 @@ export const getUserValidator = [
 ]
 
 
-export const getAllUserValidator = [
+export const getUsersValidator = [
     param('page')
     .isInt()
     .withMessage('Invalid page'),
@@ -20,27 +20,7 @@ export const getAllUserValidator = [
     validator,
 ]
 
-const updateUserAllowedFields = [
-    'name',
-    'lastname',
-    'birthday',
-    'gender',
-]
-
 export const updateUserValidator = [
-    
-    body().custom((body, { req }) => {
-        const invalidFields = Object.keys(req.body).filter(
-            (field) => !updateUserAllowedFields.includes(field)
-        )
-
-        if (invalidFields.length > 0) {
-            throw new Error(...invalidFields)
-        }
-
-        return true
-    }),
-
     body('name')
         .optional()
         .isString()

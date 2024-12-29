@@ -11,6 +11,10 @@
             "description": "Auth Management"
         },
         {
+            "name": "User",
+            "description": "User Management"
+        },
+        {
             "name": "Workflow",
             "description": "Workflow Management"
         },
@@ -25,6 +29,15 @@
         },
         "auth/login": {
             "$ref": "./paths/auth.login.json"
+        },
+        "/users": {
+            "$ref": "./paths/users.json"
+        },
+        "/users/{id}/ban": {
+            "$ref": "./paths/users.id.ban.json"
+        },
+        "/users/me": {
+            "$ref": "./paths/users.me.json"
         },
         "/workflow": {
             "$ref": "./paths/workflow.json"
@@ -41,6 +54,12 @@
     },
     "components": {
         "schemas": {
+            "User": {
+                "$ref": "./components/user.schema.json"
+            },
+            "UserMe": {
+                "$ref": "./components/userme.schema.json"
+            },
             "Output": {
                 "$ref": "./components/output.schema.json"
             },

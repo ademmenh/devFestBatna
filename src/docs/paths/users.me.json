@@ -1,0 +1,139 @@
+{
+    "get": {
+        "tags": ["User"],
+        "summary": "Get User",
+        "responses": {
+            "200": {
+                "description": "Get Me Success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/userme.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "put": {
+        "summary": "Update Me",
+        "tags": ["User"],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "john"
+                            },
+                            "lastname": {
+                                "type": "string",
+                                "example": "Doe"
+                            },
+                            "birthday": {
+                                "type": "string",
+                                "example": "2024-12-29"
+                            },
+                            "gender": {
+                                "type": "string",
+                                "enum": ["M", "F"],
+                                "example": "M"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Workflow Updated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/userme.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "delete": {
+        "summary": "Delete Me",
+        "tags": ["User"],
+        "responses": {
+            "200": {
+                "description": "User Deleted",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/userme.schema.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "./../components/error.schema.json"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

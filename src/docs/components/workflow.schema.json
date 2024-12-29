@@ -45,17 +45,17 @@
                     }
                 },
                 "example": [
-                        {
-                            "data": {
-                                "label": "email",
-                                "number": 1
-                            },
-                            "position": {
-                                "x": 5.0,
-                                "y": 5.0
-                            }
+                    {
+                        "data": {
+                            "label": "email",
+                            "number": 1
+                        },
+                        "position": {
+                            "x": 5.0,
+                            "y": 5.0
                         }
-                    ]
+                    }
+                ]
             }
         },
         "vectors": {

@@ -3,26 +3,26 @@
         "tags": ["Workflow"],
         "summary": "Get Workflows",
         "parameters": [
-          {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "default": 1,
-            "description": "page number",
-            "schema": {
-              "type": "integer"
+            {
+                "name": "page",
+                "in": "path",
+                "required": true,
+                "default": 1,
+                "description": "page number",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "required": true,
+                "default": 12,
+                "description": "limit the documents returned ",
+                "schema": {
+                    "type": "integer"
+                }
             }
-          },
-          {
-            "name": "limit",
-            "in": "path",
-            "required": true,
-            "default": 12,
-            "description": "limit the documents returned ",
-            "schema": {
-              "type": "integer"
-            }
-          }
         ],
         "responses": {
             "200": {
