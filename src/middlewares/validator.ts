@@ -4,7 +4,7 @@ import { validationResult } from 'express-validator'
 import { httpLogs } from '@Types/logs/httpLogs'
 import { errorResponse } from '@utils/response'
 
-export const validator = (req: Request, res: Response, next: NextFunction): void => {
+export const validator = (req: Request, res: Response, next: NextFunction): Response | void => {
     const errors = validationResult(req)
     console.log(errors)
     if (!errors.isEmpty()){

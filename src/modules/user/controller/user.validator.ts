@@ -46,5 +46,3 @@ export const updateUserValidator = [
 
     validator,
 ]
-
-// TODO: updae email and password

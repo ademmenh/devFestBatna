@@ -1,7 +1,6 @@
 
 import 'module-alias/register'
 
-
 import { setRoutes } from './routes'
 import { initServer } from './config/init'
 import { configCORS } from './config/cors'

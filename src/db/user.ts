@@ -78,6 +78,7 @@ UserS.methods.toAdmin = function (): Partial<UserI> {
 
 UserS.methods.toUser = function (): Partial<UserI> {
     const obj = this.toObject()
+    delete obj.password
     delete obj.banned
     delete obj.deleted
     return obj

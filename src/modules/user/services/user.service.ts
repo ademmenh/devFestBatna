@@ -6,69 +6,69 @@ import { userLogs } from './user.logs'
 
 
 export class UserServices {
-    static getUsers = async (page: number, limit: number) => {
-        try {
+    // static getUsers = async (page: number, limit: number) => {
+    //     try {
             
-            const users = await User.find()
-                .skip((page-1)*limit)
-                .limit(limit)
+    //         const users = await User.find()
+    //             .skip((page-1)*limit)
+    //             .limit(limit)
 
-            if (users.length === 0) {
-                return new errorService(
-                    httpLogs.BadRequest.code,
-                    [userLogs.INVALID_PAGE.message],
+    //         if (users.length === 0) {
+    //             return new errorService(
+    //                 httpLogs.BadRequest.code,
+    //                 [userLogs.INVALID_PAGE.message],
 
-                )
-            }
+    //             )
+    //         }
 
-            const responseUsers = users.map((user) => {
-                user.toAdmin()
-            })
+    //         const responseUsers = users.map((user) => {
+    //             user.toAdmin()
+    //         })
 
-            return new successService(
-                httpLogs.OK.code,
-                userLogs.GET_USERS_SUCCESS.message,
-                responseUsers,
+    //         return new successService(
+    //             httpLogs.OK.code,
+    //             userLogs.GET_USERS_SUCCESS.message,
+    //             responseUsers,
 
-            )
-        } catch (err) {
-            return new errorService(
-                httpLogs.InternalServerError.code,
-                [userLogs.USER_ERROR_GENERIC.message],
-                (err as Error).message,
+    //         )
+    //     } catch (err) {
+    //         return new errorService(
+    //             httpLogs.InternalServerError.code,
+    //             [userLogs.USER_ERROR_GENERIC.message],
+    //             (err as Error).message,
 
-            )
-        }
-    }
+    //         )
+    //     }
+    // }
 
-    static banUser = async (userId: string) => {
-        try {
-            const user = await User.findByIdAndUpdate(userId, {banned: true}, {returnDocument: 'after'})
+    // static banUser = async (userId: string) => {
+    //     try {
+    //         const user = await User.findByIdAndUpdate(userId, {banned: true}, {returnDocument: 'after'})
 
-            if (!user) {
-                return new errorService(
-                    httpLogs.BadRequest.code,
-                    [userLogs.USER_NOT_FOUND.message],
-                )
-            }
+    //         if (!user) {
+    //             return new errorService(
+    //                 httpLogs.BadRequest.code,
+    //                 [userLogs.USER_NOT_FOUND.message],
+    //             )
+    //         }
 
-            return new successService(
-                httpLogs.OK.code,
-                userLogs.BAN_USER_SUCCESS.message,
-                user.toAdmin(),
+    //         return new successService(
+    //             httpLogs.OK.code,
+    //             userLogs.BAN_USER_SUCCESS.message,
+    //             user.toAdmin(),
                 
-            )
-        } catch (err) {
-            return new errorService(
-                httpLogs.InternalServerError.code,
-                [userLogs.USER_ERROR_GENERIC.message],
-                (err as Error).message,
+    //         )
+    //     } catch (err) {
+    //         return new errorService(
+    //             httpLogs.InternalServerError.code,
+    //             [userLogs.USER_ERROR_GENERIC.message],
+    //             (err as Error).message,
 
-            )
-        }
-    }
+    //         )
+    //     }
+    // }
 
-    static getMe = async (userId: string) => {
+    static getProfile = async (userId: string) => {
         try {
             const user = await User.findById(userId)
             if (!user) {
@@ -95,7 +95,7 @@ export class UserServices {
         }
     }
 
-    static updateMe = async (userId: string, name: string, lastname: string, birthday: string, gender: string) => {
+    static updateProfile = async (userId: string, name: string, lastname: string, birthday: string, gender: string) => {
         try {
             const user = await User.findByIdAndUpdate(userId, {name, lastname, birthday, gender}, {returnDocument: 'after'})
             if (!user) {
@@ -122,7 +122,7 @@ export class UserServices {
         }
     }
 
-    static deleteMe = async (userId: string) => {
+    static deleteProfile = async (userId: string) => {
         try {
             const user = await User.findByIdAndUpdate(userId, {deleted: true}, {returnDocument: 'after'});
             console.log(user)

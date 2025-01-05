@@ -8,12 +8,11 @@ import { isUser } from '@middlewares/auth'
 
 export const Workflow = Router()
 
-Workflow.route('/').get(isUser, getWorkflowsValidator, getWorkflows)
+Workflow.route('/')
+    .get(isUser, getWorkflowsValidator, getWorkflows)
+    .post(isUser, createWorkflowValidator, createWorkflow)
 
-Workflow.route('/').post(isUser, createWorkflowValidator, createWorkflow)
-
-Workflow.route('/:id').get(isUser, getWorkflowValidator, getWorkflow)
-
-Workflow.route('/').put(isUser, updateWorkflowValidator, updateWorkflow)
-
-Workflow.route('/:id').delete(isUser, deleteWorkflowValidator, deleteWorkflow)
+Workflow.route('/:id')
+    .get(isUser, getWorkflowValidator, getWorkflow)
+    .put(isUser, updateWorkflowValidator, updateWorkflow)
+    .delete(isUser, deleteWorkflowValidator, deleteWorkflow)
