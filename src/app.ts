@@ -8,9 +8,17 @@ import { errorMiddleWare } from './middlewares/error'
 
 import express from 'express'
 import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
 
 
 const app = express()
+
+// app.use(helmet.noCache())
+app.use(helmet.frameguard())
+app.use(helmet.hidePoweredBy())
+app.use(helmet.ieNoOpen())
+app.use(helmet.noSniff())
+app.use(helmet.xssFilter())
 
 app.use(express.json())
 
