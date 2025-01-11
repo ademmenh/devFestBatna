@@ -1,10 +1,6 @@
 {
     "type": "object",
     "properties": {
-        "_id": {
-            "type": "string",
-            "example": "67618a680199c290f1cbd96b"
-        },
         "name": {
             "type": "string",
             "example": "john"
@@ -21,10 +17,6 @@
             "type": "string",
             "enum": ["M", "F"],
             "example": "M"
-        },
-        "email": {
-            "type": "string",
-            "example": "johnDoe@gmail.com"
         }
     }
 }

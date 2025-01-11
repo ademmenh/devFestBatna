@@ -203,34 +203,12 @@
         }
       }
     },
-    "/users": {
+    "/users/profile": {
       "get": {
         "tags": [
           "User"
         ],
-        "summary": "Get User",
-        "parameters": [
-          {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "default": 1,
-            "description": "page number",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "path",
-            "required": true,
-            "default": 12,
-            "description": "limit the documents returned ",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
+        "summary": "Get Me",
         "responses": {
           "200": {
             "description": "Get Me Success",
@@ -238,98 +216,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{id}/ban": {
-      "put": {
-        "summary": "Ban User",
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "User ID",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "67618a680199c290f1cbd96b"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Workflow Updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/me": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Get User",
-        "responses": {
-          "200": {
-            "description": "Get Me Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserMe"
                 }
               }
             }
@@ -366,29 +252,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "john"
-                  },
-                  "lastname": {
-                    "type": "string",
-                    "example": "Doe"
-                  },
-                  "birthday": {
-                    "type": "string",
-                    "example": "2024-12-29"
-                  },
-                  "gender": {
-                    "type": "string",
-                    "enum": [
-                      "M",
-                      "F"
-                    ],
-                    "example": "M"
-                  }
-                }
+                "$ref": "#/components/schemas/UserProfile"
               }
             }
           }
@@ -399,7 +263,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserMe"
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -437,7 +301,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserMe"
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -934,24 +798,12 @@
           "email": {
             "type": "string",
             "example": "johnDoe@gmail.com"
-          },
-          "banned": {
-            "type": "boolean",
-            "example": false
-          },
-          "deleted": {
-            "type": "boolean",
-            "example": false
           }
         }
       },
-      "UserMe": {
+      "UserProfile": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string",
-            "example": "67618a680199c290f1cbd96b"
-          },
           "name": {
             "type": "string",
             "example": "john"
@@ -971,10 +823,6 @@
               "F"
             ],
             "example": "M"
-          },
-          "email": {
-            "type": "string",
-            "example": "johnDoe@gmail.com"
           }
         }
       },

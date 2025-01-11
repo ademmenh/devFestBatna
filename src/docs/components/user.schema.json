@@ -25,14 +25,6 @@
         "email": {
             "type": "string",
             "example": "johnDoe@gmail.com"
-        },
-        "banned": {
-            "type": "boolean",
-            "example": false
-        },
-        "deleted": {
-            "type": "boolean",
-            "example": false
         }
     }
 }

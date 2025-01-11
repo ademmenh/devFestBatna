@@ -1,5 +1,4 @@
 
-import { exitLogs} from '@Types/logs/exitLogs'
 import { Auth } from './auth.router'
 import { Output } from './output.router'
 import { User } from './user.router'

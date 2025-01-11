@@ -30,14 +30,8 @@
         "auth/login": {
             "$ref": "./paths/auth.login.json"
         },
-        "/users": {
-            "$ref": "./paths/users.json"
-        },
-        "/users/{id}/ban": {
-            "$ref": "./paths/users.id.ban.json"
-        },
-        "/users/me": {
-            "$ref": "./paths/users.me.json"
+        "/users/profile": {
+            "$ref": "./paths/users.profile.json"
         },
         "/workflow": {
             "$ref": "./paths/workflow.json"
@@ -57,8 +51,8 @@
             "User": {
                 "$ref": "./components/user.schema.json"
             },
-            "UserMe": {
-                "$ref": "./components/userme.schema.json"
+            "UserProfile": {
+                "$ref": "./components/user.profile.schema.json"
             },
             "Output": {
                 "$ref": "./components/output.schema.json"
